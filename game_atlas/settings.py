@@ -99,6 +99,7 @@ TEMPLATE_DIRS = (
 )
 
 INSTALLED_APPS = (
+    'games',
 )
 
 # A sample logging configuration. The only tangible logging
