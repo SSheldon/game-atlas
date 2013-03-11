@@ -1,4 +1,7 @@
-from django.http import HttpResponse
+from django.shortcuts import render
+
+from games.models import Release
 
 def index(request):
-    return HttpResponse("Hello, world! You're at the games index.")
+    context = {'games_list': Release.select_all()}
+    return render(request, 'games.html', context)

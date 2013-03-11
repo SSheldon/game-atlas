@@ -1,0 +1,20 @@
+{% if games_list %}
+  <table style="border-collapse:collapse" border="1">
+    <tr>
+      <th>Title</th>
+      <th>Genre</th>
+      <th>Platform</th>
+      <th>Release Date</th>
+    </tr>
+    {% for game in games_list %}
+      <tr>
+        <td>{{ game.title }}</td>
+        <td>{{ game.genre_name }}</td>
+        <td>{{ game.platform_name }}</td>
+        <td>{{ game.release_date }}</td>
+      </tr>
+    {% endfor %}
+  </table>
+{% else %}
+  <p>Sorry, no games have been added.</p>
+{% endif %}
