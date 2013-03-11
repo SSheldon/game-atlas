@@ -31,6 +31,10 @@ And, to shut it down:
 
     $ pg_ctl stop
 
+If you encounter a "could not create shared memory segment" error on OSX,
+follow the instructions detailed here:
+http://ruby.zigzo.com/2012/07/07/postgresql-postgres-app-and-a-gotcha-on-mac-osx-lion/
+
 Running Django
 ----------
 With Postgres running and the environment variables defined, you may run
