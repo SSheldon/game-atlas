@@ -1,3 +1,12 @@
+Prerequisites
+----------
+Before you can set up Game Atlas, you'll need the following programs:
+* [git](http://git-scm.com)
+* [Python 2.7](http://www.python.org)
+* [pip](http://www.pip-installer.org)
+* [virtualenv](http://www.virtualenv.org)
+* [PostgreSQL](http://www.postgresql.org)
+
 Setup
 ----------
 To set up Game Atlas for development, run the following commands:
