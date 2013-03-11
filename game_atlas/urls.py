@@ -9,6 +9,8 @@ urlpatterns = patterns('',
     # url(r'^$', 'game_atlas.views.home', name='home'),
     # url(r'^game_atlas/', include('game_atlas.foo.urls')),
 
+    url(r'^$', 'games.views.index', name='index'),
+
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
