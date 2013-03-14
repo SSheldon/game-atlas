@@ -6,7 +6,9 @@
   </tr>
   {% for game in games_list %}
   <tr>
-    <td>{{ game.title }}</td>
+    <td>
+      <a href="{% url 'games:game_detail' game.id %}">{{ game.title }}</a>
+    </td>
     <td>{{ game.genre_name }}</td>
     <td>
       <form action="{% url 'games:game_delete' game.id %}" method="post"
