@@ -8,6 +8,10 @@ def releases(request):
     context = {'games_list': Release.select_all()}
     return render(request, 'releases.html', context)
 
+def index(request):
+    context = {'games_list': Game.select_all()}
+    return render(request, 'games/index.html', context)
+
 def game_delete(request, game_id):
     Game.delete(game_id)
     return HttpResponseRedirect(reverse('games:index'))

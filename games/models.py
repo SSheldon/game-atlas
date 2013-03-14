@@ -21,6 +21,18 @@ class Game(models.Model):
         db_table = 'game'
 
     @staticmethod
+    def select_all():
+        cursor = connection.cursor()
+
+        query = (
+            'SELECT game.id, game.title, genre.name as "genre_name" '
+            'FROM game JOIN genre ON game.genre_id=genre.id'
+        )
+        cursor.execute(query)
+
+        return dict_fetch_all(cursor)
+
+    @staticmethod
     def select(game_id):
         cursor = connection.cursor()
 
