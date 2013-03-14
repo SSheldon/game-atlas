@@ -5,7 +5,18 @@
 {% endif %}
   Title: <input type="text" name="game_title" value="{{ game.title }}">
   <br />
-  Genre: {{ game.genre_name }}
+  Genre:
+  <select name="genre_id">
+    {% for genre in genres %}
+    {% ifequal game.genre_id genre.id %}
+    <option value="{{ genre.id }}" selected="selected">
+    {% else %}
+    <option value="{{ genre.id }}">
+    {% endifequal %}
+      {{ genre.name }}
+    </option>
+    {% endfor %}
+  </select>
   <br />
   <input type="submit" value="Save" />
 </form>

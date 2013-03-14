@@ -14,6 +14,15 @@ class Genre(models.Model):
         managed = False
         db_table = 'genre'
 
+    @staticmethod
+    def select_all():
+        cursor = connection.cursor()
+
+        query = 'SELECT id, name FROM genre'
+        cursor.execute(query)
+
+        return dict_fetch_all(cursor)
+
 class Game(models.Model):
 
     class Meta:
@@ -37,7 +46,7 @@ class Game(models.Model):
         cursor = connection.cursor()
 
         query = (
-            'SELECT game.id, game.title, genre.name as "genre_name" '
+            'SELECT game.id, title, genre_id, genre.name as "genre_name" '
             'FROM game JOIN genre ON game.genre_id=genre.id '
             'WHERE game.id = %s'
         )
