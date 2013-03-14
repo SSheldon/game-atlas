@@ -15,6 +15,10 @@ def index(request):
 def game_add(request):
     pass
 
+def game_new(request):
+    context = {'genres': Genre.select_all()}
+    return render(request, 'games/detail.html', context)
+
 def game_detail(request, game_id):
     context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
     return render(request, 'games/detail.html', context)
