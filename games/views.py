@@ -12,9 +12,15 @@ def index(request):
     context = {'games_list': Game.select_all()}
     return render(request, 'games/index.html', context)
 
+def game_add(request):
+    pass
+
 def game_detail(request, game_id):
     context = {'game': Game.select(game_id)}
     return render(request, 'games/detail.html', context)
+
+def game_edit(request, game_id):
+    pass
 
 def game_delete(request, game_id):
     Game.delete(game_id)
