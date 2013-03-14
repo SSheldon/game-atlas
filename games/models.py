@@ -37,7 +37,7 @@ class Game(models.Model):
         cursor = connection.cursor()
 
         query = (
-            'SELECT game.title, genre.name as "genre_name" '
+            'SELECT game.id, game.title, genre.name as "genre_name" '
             'FROM game JOIN genre ON game.genre_id=genre.id '
             'WHERE game.id = %s'
         )
