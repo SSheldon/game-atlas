@@ -9,7 +9,7 @@ urlpatterns = patterns('',
     # url(r'^$', 'game_atlas.views.home', name='home'),
     # url(r'^game_atlas/', include('game_atlas.foo.urls')),
 
-    url(r'^$', 'games.views.index', name='index'),
+    url(r'^$', 'games.views.releases', name='releases'),
     url(r'^games/', include('games.urls', namespace='games')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

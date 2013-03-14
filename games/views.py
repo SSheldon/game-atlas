@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from games.models import Game, Release
 
-def index(request):
+def releases(request):
     context = {'games_list': Release.select_all()}
     return render(request, 'releases.html', context)
 
