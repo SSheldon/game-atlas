@@ -6,7 +6,7 @@ from games.models import Game, Release
 
 def index(request):
     context = {'games_list': Release.select_all()}
-    return render(request, 'games.html', context)
+    return render(request, 'releases.html', context)
 
 def game_delete(request, game_id):
     Game.delete(game_id)
