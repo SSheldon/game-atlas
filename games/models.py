@@ -33,10 +33,10 @@ class Game(models.Model):
     def select_all():
         cursor = connection.cursor()
 
-        query = (
-            'SELECT game.id, game.title, genre.name as "genre_name" '
-            'FROM game JOIN genre ON game.genre_id=genre.id'
-        )
+        query = """
+            SELECT game.id, game.title, genre.name as "genre_name"
+            FROM game JOIN genre ON game.genre_id=genre.id
+        """
         cursor.execute(query)
 
         return dict_fetch_all(cursor)
@@ -45,11 +45,11 @@ class Game(models.Model):
     def select(game_id):
         cursor = connection.cursor()
 
-        query = (
-            'SELECT game.id, title, genre_id, genre.name as "genre_name" '
-            'FROM game JOIN genre ON game.genre_id=genre.id '
-            'WHERE game.id = %s'
-        )
+        query = """
+            SELECT game.id, title, genre_id, genre.name as "genre_name"
+            FROM game JOIN genre ON game.genre_id=genre.id
+            WHERE game.id = %s
+        """
         cursor.execute(query, (game_id,))
 
         row = cursor.fetchone()
@@ -61,9 +61,7 @@ class Game(models.Model):
     def insert(title, genre_id):
         cursor = connection.cursor()
 
-        query = (
-            'INSERT INTO game (title, genre_id) VALUES (%s, %s) RETURNING id'
-        )
+        query = 'INSERT INTO game (title, genre_id) VALUES (%s, %s) RETURNING id'
         cursor.execute(query, (title, genre_id))
         transaction.commit_unless_managed()
 
@@ -104,13 +102,14 @@ class Release(models.Model):
     def select_all():
         cursor = connection.cursor()
 
-        cursor.execute(
-            'SELECT game.title, release.release_date, '
-            'genre.name as "genre_name", platform.name as "platform_name" '
-            'FROM release '
-            'JOIN game ON release.game_id=game.id '
-            'JOIN platform ON release.platform_id=platform.id '
-            'JOIN genre ON game.genre_id=genre.id '
-        )
+        query = """
+            SELECT game.title, release.release_date,
+            genre.name as "genre_name", platform.name as "platform_name"
+            FROM release
+            JOIN game ON release.game_id=game.id
+            JOIN platform ON release.platform_id=platform.id
+            JOIN genre ON game.genre_id=genre.id
+        """
+        cursor.execute(query)
 
         return dict_fetch_all(cursor)
