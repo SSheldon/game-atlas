@@ -13,8 +13,8 @@ def index(request):
     return render(request, 'games/index.html', context)
 
 def game_detail(request, game_id):
-    context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
-    return render(request, 'games/edit.html', context)
+    # TODO(ssheldon): Implement a game detail view
+    pass
 
 def game_add(request):
     if request.method == 'POST':
@@ -28,11 +28,15 @@ def game_add(request):
         return render(request, 'games/edit.html', context)
 
 def game_edit(request, game_id):
-    Game.update(game_id,
-        title=request.POST['game_title'],
-        genre_id=request.POST['genre_id'],
-    )
-    return HttpResponseRedirect(reverse('games:index'))
+    if request.method == 'POST':
+        Game.update(game_id,
+            title=request.POST['game_title'],
+            genre_id=request.POST['genre_id'],
+        )
+        return HttpResponseRedirect(reverse('games:index'))
+    else: # request.method == 'GET'
+        context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
+        return render(request, 'games/edit.html', context)
 
 def game_delete(request, game_id):
     Game.delete(game_id)
