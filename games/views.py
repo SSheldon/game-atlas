@@ -14,7 +14,7 @@ def index(request):
 
 def game_detail(request, game_id):
     context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
-    return render(request, 'games/detail.html', context)
+    return render(request, 'games/edit.html', context)
 
 def game_add(request):
     if request.method == 'POST':
@@ -25,7 +25,7 @@ def game_add(request):
         return HttpResponseRedirect(reverse('games:index'))
     else: # request.method == 'GET'
         context = {'genres': Genre.select_all()}
-        return render(request, 'games/detail.html', context)
+        return render(request, 'games/edit.html', context)
 
 def game_edit(request, game_id):
     Game.update(game_id,
