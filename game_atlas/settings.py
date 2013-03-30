@@ -85,6 +85,9 @@ TEMPLATE_LOADERS = (
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
 
 ROOT_URLCONF = 'game_atlas.urls'
@@ -100,6 +103,10 @@ TEMPLATE_DIRS = (
 
 INSTALLED_APPS = (
     'games',
+    'accounts',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
 )
 
 # A sample logging configuration. The only tangible logging
