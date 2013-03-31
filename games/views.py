@@ -1,6 +1,4 @@
-from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from games.models import Genre, Game, Release
 
@@ -22,7 +20,7 @@ def game_add(request):
             title=request.POST['game_title'],
             genre_id=request.POST['genre_id'],
         )
-        return HttpResponseRedirect(reverse('games:index'))
+        return redirect('games:index')
     else: # request.method == 'GET'
         context = {'genres': Genre.select_all()}
         return render(request, 'games/edit.html', context)
@@ -33,11 +31,11 @@ def game_edit(request, game_id):
             title=request.POST['game_title'],
             genre_id=request.POST['genre_id'],
         )
-        return HttpResponseRedirect(reverse('games:index'))
+        return redirect('games:index')
     else: # request.method == 'GET'
         context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
         return render(request, 'games/edit.html', context)
 
 def game_delete(request, game_id):
     Game.delete(game_id)
-    return HttpResponseRedirect(reverse('games:index'))
+    return redirect('games:index')
