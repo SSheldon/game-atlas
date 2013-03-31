@@ -3,6 +3,7 @@
 {% else %}
 <form action="{% url 'games:game_add' %}" method="post">
 {% endif %}
+  {% csrf_token %}
   Title: <input type="text" name="game_title" value="{{ game.title }}">
   <br />
   Genre:

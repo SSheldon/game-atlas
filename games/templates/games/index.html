@@ -13,6 +13,7 @@
     <td>
       <form action="{% url 'games:game_delete' game.id %}" method="post"
             style="display:inline">
+        {% csrf_token %}
         <input type="submit" value="Delete" />
       </form>
     </td>
