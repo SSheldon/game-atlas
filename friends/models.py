@@ -41,8 +41,5 @@ class Friends(models.Model):
         #We probably need to fix this query up a little bit since its not a symmetric relationship
         query = 'SELECT friend_id FROM friends WHERE userid = %s'
         cursor.execute(query, (user1))
-
-        row = cursor.fetchone()
-        if not row:
-            return {}
-        return dict(zip((col[0] for col in cursor.description), row))
+        
+        return dict_fetch_all(cursor)
