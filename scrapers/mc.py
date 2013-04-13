@@ -11,7 +11,3 @@ def get_score(game):
 		#We will need to trim this somehow, but it returns the right score
 		return span
 
-def main():
-	print get_score("bioshock")
-if __name__ == '__main__': 
-	main() 
