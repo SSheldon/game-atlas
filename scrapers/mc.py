@@ -1,4 +1,4 @@
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 import urllib
 import re
 
@@ -10,4 +10,3 @@ def get_score(game):
     for span in soup.findAll('span', {'class':'score_value', 'property':'v:average'}):
         #We will need to trim this somehow, but it returns the right score
         return span
-
