@@ -16,15 +16,19 @@ def get_release(game, soup):
         if span.string == 'Release Date:':
             return span.findNext('span')
 
-def getGameInfo(game):
-    url = urllib.urlopen("http://www.metacritic.com/game/xbox-360/" + game)
+def getGameInfo(game, platform):
+    url = urllib.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
 
     soup = BeautifulSoup(url)
+    info_dict = {}
 
-    print get_score(game, soup)
-    print get_genre(game, soup)
-    print get_release(game, soup)
+    info_dict['score'] = get_score(game, soup)
+    info_dict['genre'] =  get_genre(game, soup)
+    info_dict['release'] =  get_release(game, soup)
+
+    return info_dict
 def main():
-    getGameInfo('halo-4')
+    test = getGameInfo('bioshock-infinite', 'playstation-3')
+    print test
 if __name__ == '__main__': 
      main() 
