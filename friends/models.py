@@ -1,12 +1,6 @@
 from django.db import models, connection, transaction
 
-class Friends(models.Model):
-
-    class Meta:
-        managed = False
-        db_table = 'friends'
-
-    def dict_fetch_all(cursor):
+def dict_fetch_all(cursor):
         """Return all rows from a cursor as a dict"""
         desc = cursor.description
         return [
@@ -14,6 +8,12 @@ class Friends(models.Model):
             for row in cursor.fetchall()
         ]
 
+
+class Friends(models.Model):
+
+    class Meta:
+        managed = False
+        db_table = 'friends'
     #adds friends to the database once both of them agree to be friends
     @staticmethod
     def add_friends(user1, user2):
@@ -40,7 +40,7 @@ class Friends(models.Model):
         cursor = connection.cursor()
         #We probably need to fix this query up a little bit since its not a symmetric relationship
         query = 'SELECT username FROM friends INNER JOIN auth_user ON friend_id = id WHERE user_id = %s'
-        cursor.execute(query, (user_id))
+        cursor.execute(query, (user_id,))
         
         return dict_fetch_all(cursor)
     @staticmethod

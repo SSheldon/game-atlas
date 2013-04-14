@@ -1,0 +1,17 @@
+{% if friends %}
+<table style="border-collapse:collapse" border="1">
+  <tr>
+    <th>Name</th>
+  </tr>
+  {% for friend in friends %}
+  <tr>
+    <td>
+      <a href="google.com">{{ friend.username }}</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+<p>Sorry, no friends exist :P</p>
+{% endif %}
+<br />

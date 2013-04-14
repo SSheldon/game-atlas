@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from friends.models import Friends
-from accounts import views
 
 @login_required
 def friend_request_send(request, username):
@@ -18,4 +17,9 @@ def friend_request_reject(request):
 @login_required
 def friend_remove(request, friend_id):
     pass
+@login_required
+def show_friends(request):
+	context = {'friends': Friends.get_friends(request.user.id)}
+
+	return render(request, 'friends_list.html', context)
 

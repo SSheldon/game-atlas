@@ -1,7 +1,7 @@
 from django.conf.urls import patterns, url
 
-from accounts import views
+from friends import views
 
 urlpatterns = patterns('',
-    url(r'^friends/$', views.friends, name='friends'),
+    url(r'^friends/$', views.show_friends),
 )
