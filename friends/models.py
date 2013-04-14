@@ -39,7 +39,18 @@ class Friends(models.Model):
     def get_friends(user_id):
         cursor = connection.cursor()
         #We probably need to fix this query up a little bit since its not a symmetric relationship
-        query = 'SELECT friend_id FROM friends WHERE user_id = %s'
-        cursor.execute(query, (user1))
+        query = 'SELECT username FROM friends INNER JOIN auth_user ON friend_id = id WHERE user_id = %s'
+        cursor.execute(query, (user_id))
         
         return dict_fetch_all(cursor)
+    @staticmethod
+    def find_user(user_id):
+        cursor = connection.cursor()
+
+        query = 'SELECT username FROM auth_user WHERE id=%s'
+        cursor.execute(query, (user_id))
+
+        row = cursor.fetchone()
+        if not row:
+            return {}
+        return dict(zip((col[0] for col in cursor.description), row))

@@ -1,17 +1,21 @@
 from django.conf import settings
-from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
 from friends.models import Friends
+from accounts import views
 
-def friend_request_send(request):
+@login_required
+def friend_request_send(request, username):
     pass
+@login_required
 def friend_request_accept(request):
     pass
+@login_required
 def friend_request_reject(request):
     pass
-def friend_remove(request):
+@login_required
+def friend_remove(request, friend_id):
     pass
+
