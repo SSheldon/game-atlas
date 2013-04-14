@@ -3,18 +3,18 @@ import urllib
 import re
 
 def get_score(game, soup):
-    return soup.find('span', {'class':'score_value', 'property':'v:average'})
+    return soup.find('span', {'class':'score_value', 'property':'v:average'}).string
         #We will need to trim this somehow, but it returns the right score
 
 def get_genre(game, soup):
     for span in soup.findAll('span', {'class': 'label'}):
         if span.string == 'Genre(s):':
-            return span.findNext('span')
+            return span.findNext('span').string
 
 def get_release(game, soup):
     for span in soup.findAll('span', {'class': 'label'}):
         if span.string == 'Release Date:':
-            return span.findNext('span')
+            return span.findNext('span').string
 
 def getGameInfo(game, platform):
     url = urllib.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
