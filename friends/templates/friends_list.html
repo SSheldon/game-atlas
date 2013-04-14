@@ -6,7 +6,14 @@
   {% for friend in friends %}
   <tr>
     <td>
-      <a href="google.com">{{ friend.username }}</a>
+      <a href="">{{ friend.username }}</a>
+    </td>
+    <td>
+      <form action="{% url 'friend_remove' friend.id %}" method="get"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="submit" value="Remove" />
+      </form>
     </td>
   </tr>
   {% endfor %}
