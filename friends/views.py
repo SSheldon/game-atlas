@@ -11,7 +11,7 @@ def friend_request_send(request, username):
 
 @login_required
 def friend_info(request, friend_id):
-	return redirect('friends:show_friends')
+    return redirect('friends:show_friends')
 
 @login_required
 def friend_request_accept(request):
@@ -24,12 +24,11 @@ def friend_request_reject(request):
 @login_required
 def friend_remove(request, friend_id):
     Friends.remove_friends(request.user.id, friend_id)
-    context = {'friends': Friends.get_friends(request.user.id)}
-    return render(request, 'friends_list.html', context)
+    return redirect('friends:show_friends')
 
 @login_required
 def show_friends(request):
-	context = {'friends': Friends.get_friends(request.user.id)}
+    context = {'friends': Friends.get_friends(request.user.id)}
 
-	return render(request, 'friends_list.html', context)
+    return render(request, 'friends_list.html', context)
 
