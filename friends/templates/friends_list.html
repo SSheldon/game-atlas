@@ -6,10 +6,10 @@
   {% for friend in friends %}
   <tr>
     <td>
-      <a href="">{{ friend.username }}</a>
+      <a href="{% url 'friends:friend_info' friend.id %}">{{ friend.username }}</a>
     </td>
     <td>
-      <form action="{% url 'friend_remove' friend.id %}" method="get"
+      <form action="{% url 'friends:friend_remove' friend.id %}" method="post"
             style="display:inline">
         {% csrf_token %}
         <input type="submit" value="Remove" />
