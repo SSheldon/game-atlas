@@ -104,6 +104,7 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     'games',
     'accounts',
+    'friends',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^$', 'games.views.index', name='home'),
     url(r'^games/', include('games.urls', namespace='games')),
     url(r'^accounts/', include('accounts.urls')),
-
+    url(r'^friends/', include('friends.urls', namespace='friends')),
     # Uncomment the admin/doc line below to enable admin documentation:
     # url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
