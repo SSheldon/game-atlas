@@ -8,20 +8,29 @@ def dict_fetch_all(cursor):
             for row in cursor.fetchall()
         ]
 
-
 class Friends(models.Model):
 
     class Meta:
         managed = False
         db_table = 'friends'
-    #adds friends to the database once both of them agree to be friends
+    #This will be used to send a friend request message (type_id of 0)
     @staticmethod
     def add_friends(user1, user2):
         cursor = connection.cursor()
 
-        query = 'INSERT INTO friends (user_id, friend_id) VALUES (%s, %s)'
+        query = 'INSERT INTO friends (user_id, friend_id) VALUES (%s, %s, 0)'
         cursor.execute(query, (user1, user2))
-        cursor.execute(query, (user2, user1))
+        transaction.commit_unless_managed()
+
+    @staticmethod
+    def accept_friends(user1, user2):
+        cursor = conntectin.cursor()
+
+        query = 'UPDATE friends SET type_id = 1 WHERE friend_id = user1 AND user_id user2'
+        cursor.execute(query)
+
+        query = 'INSERT INTO frineds (user_id, friend_id) VALUES (%s, %s, 1)'
+        cursor.execute(query, (user1, user2))
         transaction.commit_unless_managed()
 
     #Removes from both users friends list
