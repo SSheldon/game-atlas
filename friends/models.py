@@ -15,6 +15,18 @@ class Friends(models.Model):
         db_table = 'friends'
     #This will be used to send a friend request message (type_id of 0)
     @staticmethod
+    def get_userid(username):
+        cursor = connection.cursor()
+
+        query = 'SELECT id from auth_user where username = %s'
+        cursor.execute(query, (username))
+
+        row = cursor.fetchone()
+        if not row:
+            return {}
+        return dict(zip((col[0] for col in cursor.description), row))
+
+    @staticmethod
     def add_friends(user1, user2):
         cursor = connection.cursor()
 
@@ -24,13 +36,21 @@ class Friends(models.Model):
 
     @staticmethod
     def accept_friends(user1, user2):
-        cursor = conntectin.cursor()
+        cursor = connection.cursor()
 
         query = 'UPDATE friends SET type_id = 1 WHERE friend_id = user1 AND user_id user2'
         cursor.execute(query)
 
         query = 'INSERT INTO frineds (user_id, friend_id) VALUES (%s, %s, 1)'
         cursor.execute(query, (user1, user2))
+        transaction.commit_unless_managed()
+
+    @staticmethod
+    def reject_friend(user1, user2):
+        cursor =connection.cursor()
+
+        query = 'DELETE FROM friends WHERE user_id = %s AND friend_id = %s'
+        cursor.execute(query, (user2, user1))
         transaction.commit_unless_managed()
 
     #Removes from both users friends list
