@@ -1,6 +1,6 @@
 from django.db import models, connection, transaction
 
-from game_atlas.utils.models import dict_fetch_all
+from game_atlas.utils.models import dict_fetch_all, dict_fetch_one
 
 class Friends(models.Model):
 
@@ -15,10 +15,7 @@ class Friends(models.Model):
         query = 'SELECT id from auth_user where username = %s'
         cursor.execute(query, (username))
 
-        row = cursor.fetchone()
-        if not row:
-            return {}
-        return dict(zip((col[0] for col in cursor.description), row))
+        return dict_fetch_one(cursor)
 
     @staticmethod
     def add_friends(user1, user2):
@@ -73,7 +70,4 @@ class Friends(models.Model):
         query = 'SELECT username FROM auth_user WHERE id=%s'
         cursor.execute(query, (user_id))
 
-        row = cursor.fetchone()
-        if not row:
-            return {}
-        return dict(zip((col[0] for col in cursor.description), row))
+        return dict_fetch_one(cursor)

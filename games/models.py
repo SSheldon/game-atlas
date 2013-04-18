@@ -1,6 +1,6 @@
 from django.db import models, connection, transaction
 
-from game_atlas.utils.models import dict_fetch_all
+from game_atlas.utils.models import dict_fetch_all, dict_fetch_one
 
 class Genre(models.Model):
 
@@ -46,10 +46,7 @@ class Game(models.Model):
         """
         cursor.execute(query, (game_id,))
 
-        row = cursor.fetchone()
-        if not row:
-            return {}
-        return dict(zip((col[0] for col in cursor.description), row))
+        return dict_fetch_one(cursor)
 
     @staticmethod
     def insert(title, genre_id):
