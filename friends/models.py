@@ -6,7 +6,7 @@ class Friends(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'friends'
+        db_table = 'friend'
     #This will be used to send a friend request message (type_id of 0)
     @staticmethod
     def get_userid(username):
@@ -21,7 +21,7 @@ class Friends(models.Model):
     def add_friends(user1, user2):
         cursor = connection.cursor()
 
-        query = 'INSERT INTO friends (user_id, friend_id) VALUES (%s, %s, 0)'
+        query = 'INSERT INTO friend (user_id, friend_id) VALUES (%s, %s)'
         cursor.execute(query, (user1, user2))
         transaction.commit_unless_managed()
 
@@ -29,10 +29,7 @@ class Friends(models.Model):
     def accept_friends(user1, user2):
         cursor = connection.cursor()
 
-        query = 'UPDATE friends SET type_id = 1 WHERE friend_id = user1 AND user_id user2'
-        cursor.execute(query)
-
-        query = 'INSERT INTO frineds (user_id, friend_id) VALUES (%s, %s, 1)'
+        query = 'INSERT INTO friend (user_id, friend_id) VALUES (%s, %s)'
         cursor.execute(query, (user1, user2))
         transaction.commit_unless_managed()
 
@@ -40,7 +37,7 @@ class Friends(models.Model):
     def reject_friend(user1, user2):
         cursor =connection.cursor()
 
-        query = 'DELETE FROM friends WHERE user_id = %s AND friend_id = %s'
+        query = 'DELETE FROM friend WHERE user_id = %s AND friend_id = %s'
         cursor.execute(query, (user2, user1))
         transaction.commit_unless_managed()
 
@@ -49,7 +46,7 @@ class Friends(models.Model):
     def remove_friends(user1, user2):
         cursor = connection.cursor()
 
-        query = 'DELETE FROM friends WHERE user_id = %s AND friend_id = %s'
+        query = 'DELETE FROM friend WHERE user_id = %s AND friend_id = %s'
         cursor.execute(query, (user1, user2))
         cursor.execute(query, (user2, user1))
         transaction.commit_unless_managed()
@@ -59,7 +56,7 @@ class Friends(models.Model):
     def get_friends(user_id):
         cursor = connection.cursor()
         #We probably need to fix this query up a little bit since its not a symmetric relationship
-        query = 'SELECT username, id FROM friends INNER JOIN auth_user ON friend_id = id WHERE user_id = %s'
+        query = 'SELECT username, id FROM friend INNER JOIN auth_user ON friend_id = id WHERE user_id = %s'
         cursor.execute(query, (user_id,))
         
         return dict_fetch_all(cursor)
