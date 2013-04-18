@@ -44,3 +44,4 @@ def show_friends(request):
     context = {'friends': Friends.get_friends(request.user.id)}
 
     return render(request, 'friends_list.html', context)
+
