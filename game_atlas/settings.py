@@ -105,6 +105,7 @@ INSTALLED_APPS = (
     'games',
     'accounts',
     'friends',
+    'lists',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
