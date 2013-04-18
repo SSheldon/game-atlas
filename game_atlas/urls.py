@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
     url(r'^$', 'games.views.index', name='home'),
     url(r'^games/', include('games.urls', namespace='games')),
-    url(r'^accounts/', include('accounts.urls')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^friends/', include('friends.urls', namespace='friends')),
     url(r'^users/', include('users.urls')),
 

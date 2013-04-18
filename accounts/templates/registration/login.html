@@ -1,7 +1,7 @@
-<form action="{% url 'django.contrib.auth.views.login' %}" method="post">
+<form action="{% url 'accounts:login' %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <input type="submit" value="Log in" />
 </form>
 
-Or <a href="{% url 'signup' %}">sign up</a> to get started!
+Or <a href="{% url 'accounts:signup' %}">sign up</a> to get started!
