@@ -1,3 +1,4 @@
+from django.db import connection, transaction
 from django.db.models import Model
 
 from game_atlas.utils.models import dict_fetch_all
@@ -13,7 +14,7 @@ class UserGame(Model):
         cursor = connection.cursor()
 
         query = """
-            SELECT game.title, genre.name as "genre_name"
+            SELECT game.id, game.title, genre.name as "genre_name"
             FROM user_game
             JOIN game on user_game.game_id=game.id
             JOIN genre ON game.genre_id=genre.id
