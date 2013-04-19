@@ -14,19 +14,9 @@ def get_steamid(username):
         steamid = None
     return steamid
 
-def get_achievement_percentage(stats):
-    percentage = 0.0
-    if 'achievements' in  stats['playerstats']:
-        total_num = len(stats['playerstats']['achievements'])
-        earned = 0
-        for achievement in stats['playerstats']['achievements']:
-            if achievement['achieved'] == 1:
-                earned += 1.0
-        percentage = (earned/total_num) * 100.0
-    return percentage
 
-def get_games(username):
-    games_dict = {}
+def get_game_appids(username):
+    games_appid_list = []
     api_key = '8FFA57C3004635970E3366E04EE2F8A0'
     steamid = get_steamid(username)
     if steamid == None:
@@ -36,37 +26,28 @@ def get_games(username):
     owned_games = urllib2.urlopen(owned_games_url)
     games = json.load(owned_games)
     for game in games['response']['games']:
-        appid = str(game['appid'])
-        game_stats_url = 'http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + appid + '&key=' + api_key + '&steamid=' + steamid
-        try:
-            game_stats = urllib2.urlopen(game_stats_url)
-            stats = json.load(game_stats)
-            name = stats['playerstats']['gameName']
-            if name != '' and not 'ValveTestApp' in name:
-                percentage = get_achievement_percentage(stats)
-                if not name in games_dict:
-                    games_dict[name] = percentage
-                else:
-                    if percentage > games_dict[name]:
-                        games_dict[name] = percentage
-        except ValueError, ex:
-            continue
-        except urllib2.URLError, ex:
-            continue
+        games_appid_list.append(str(game['appid']))
         
-    return games_dict
-        
-    #for key in games_dict:
-        #print key + ': ' + str(games_dict[key])
+    return games_appid_list
 
 
-
-
-
-#if __name__ == '__main__':
-    #get_games('Underground_Ace')
-    #get_games('dark_knight_642')
-    #get_games('Infinite010')
-    
+def get_game_name(username, appid):
+    api_key = '8FFA57C3004635970E3366E04EE2F8A0'
+    steamid = get_steamid(username)
+    # not happy with having to call get_steamid here. need to refactor this all a bit i think
+    game_stats_url = 'http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + appid + '&key=' + api_key + '&steamid=' + steamid
+    # couldn't find a better/more reliable api call to get game name than this one
+    try:
+        game_stats = urllib2.urlopen(game_stats_url)
+        stats = json.load(game_stats)
+        name = stats['playerstats']['gameName']
+        if name != '' and not 'ValveTestApp' in name:
+            return name
+        else:
+            return None
+    except ValueError, ex:
+        return None
+    except urllib2.URLError, ex:
+        return None
     
     
