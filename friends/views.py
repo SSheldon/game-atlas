@@ -12,11 +12,11 @@ def friend_request_send(request, username):
         Friends.add_friends(user1 = request.user.id,
                             user2 = friend_id)
 
-    return redirect('show_friends')
+    return redirect('profile')
 
 @login_required
 def friend_info(request, friend_id):
-    return redirect('show_friends')
+    return redirect('profile')
 
 @login_required
 def friend_request_accept(request, friend_id):
@@ -24,19 +24,19 @@ def friend_request_accept(request, friend_id):
 
         accept_friends(user1 = request.user.id, user2 = request.POST['friends_id'])
 
-    return redirect('show_friends')
+    return redirect('profile')
 
 @login_required
 def friend_request_reject(request):
     if request.method == 'POST':
         reject_friends(user1=request.user.id, 
                         user2 = request.POST['friends_id'])
-    return redirect('show_friends')
+    return redirect('profile')
 
 @login_required
-def friend_remove(request, user1):
-    Friends.remove_friends(request.user.id, user1)
-    return redirect('show_friends', request.user.username)
+def friend_remove(request, username):
+    Friends.remove_friends(request.user.id, username)
+    return redirect('profile', request.user.username)
 
 @login_required
 def show_friends(request, username):
