@@ -34,8 +34,8 @@ def friend_request_reject(request):
     return redirect('show_friends')
 
 @login_required
-def friend_remove(request, username):
-    Friends.remove_friends(request.user.id, username)
+def friend_remove(request, user1):
+    Friends.remove_friends(request.user.id, user1)
     return redirect('show_friends', request.user.username)
 
 @login_required

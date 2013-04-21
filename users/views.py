@@ -11,3 +11,7 @@ def games(request, username):
 def friends(request, username):
     user = get_object_or_404(User, username=username)
     return friends_views.show_friends(request, user.id)
+
+def remove_friend(request, username):
+    user = get_object_or_404(User, username=username)
+    return friends_views.friend_remove(request, user.id)
