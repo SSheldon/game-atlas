@@ -11,12 +11,12 @@ def friend_request_send(request, username):
         friend_id = request.POST['username']
         Friends.add_friends(user1 = request.user.id,
                             user2 = friend_id)
-    
-    return redirect('friends:show_friends')
+
+    return redirect('show_friends')
 
 @login_required
 def friend_info(request, friend_id):
-    return redirect('friends:show_friends')
+    return redirect('show_friends')
 
 @login_required
 def friend_request_accept(request, friend_id):
@@ -24,24 +24,24 @@ def friend_request_accept(request, friend_id):
 
         accept_friends(user1 = request.user.id, user2 = request.POST['friends_id'])
 
-    return redirect('friends:show_friends')
+    return redirect('show_friends')
 
 @login_required
 def friend_request_reject(request):
     if request.method == 'POST':
         reject_friends(user1=request.user.id, 
                         user2 = request.POST['friends_id'])
-    return redirect('friends:show_friends')
+    return redirect('show_friends')
 
 @login_required
-def friend_remove(request, friend_id):
-    print 'hey'
-    Friends.remove_friends(request.user.id, friend_id)
-    return redirect('friends:show_friends')
+def friend_remove(request, username):
+    Friends.remove_friends(request.user.id, username)
+    return redirect('show_friends', request.user.username)
 
 @login_required
-def show_friends(request):
+def show_friends(request, username):
     context = {'friends': Friends.get_friends(request.user.id)}
 
     return render(request, 'friends_list.html', context)
+
 
