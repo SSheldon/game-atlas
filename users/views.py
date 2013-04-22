@@ -23,5 +23,10 @@ def remove_friend(request, username):
 def profile(request, username):
     user = get_object_or_404(User, username=username)
 
-    context = {'friends': Friends.get_friends(user.id), 'games_list': UserGame.get_games(request.user.id), 'page': user}
+    context = {
+            'friends': Friends.get_friends(user.id), 
+            'games_list': UserGame.get_games(request.user.id), 
+            'page': user
+    }
+    
     return render(request, 'profile1.html', context)

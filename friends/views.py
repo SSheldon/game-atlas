@@ -9,8 +9,7 @@ from friends.models import Friends
 def friend_request_send(request, username):
     if request.method == 'POST':
         friend_id = request.POST['username']
-        Friends.add_friends(user1 = request.user.id,
-                            user2 = friend_id)
+        Friends.add_friends(request.user.id, friend_id)
 
     return redirect('profile')
 
@@ -19,18 +18,16 @@ def friend_info(request, friend_id):
     return redirect('profile')
 
 @login_required
-def friend_request_accept(request, friend_id):
+def friend_request_accept(request):
     if request.method == 'POST':
-
-        accept_friends(user1 = request.user.id, user2 = request.POST['friends_id'])
+        accept_friends(request.user.id, request.POST['friends_id'])
 
     return redirect('profile')
 
 @login_required
 def friend_request_reject(request):
     if request.method == 'POST':
-        reject_friends(user1=request.user.id, 
-                        user2 = request.POST['friends_id'])
+        reject_friends(Request.user.id, request.POST['friends_id'])
     return redirect('profile')
 
 @login_required
