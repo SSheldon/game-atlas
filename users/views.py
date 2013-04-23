@@ -25,8 +25,8 @@ def profile(request, username):
 
     context = {
         'friends': Friend.get_friends(user.id),
-        'games_list': UserGame.get_games(request.user.id),
+        'games': UserGame.get_games(request.user.id),
         'page': user,
     }
 
-    return render(request, 'profile1.html', context)
+    return render(request, 'users/profile.html', context)
