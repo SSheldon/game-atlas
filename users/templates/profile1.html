@@ -10,7 +10,7 @@
     </td>
     {% if user.username == page.username %}
     <td>
-      <form action="{% url 'friend_remove' friend.username %}" method="post"
+      <form action="{% url 'user:remove_friend' friend.username %}" method="post"
             style="display:inline">
         {% csrf_token %}
         <input type="submit" value="Remove" />
