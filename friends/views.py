@@ -3,13 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 
-from friends.models import Friends
+from friends.models import Friend
 
 @login_required
 def friend_request_send(request, username):
     if request.method == 'POST':
         friend_id = request.POST['username']
-        Friends.add_friends(request.user.id, friend_id)
+        Friend.add_friends(request.user.id, friend_id)
 
     return redirect('user:profile')
 
@@ -32,12 +32,12 @@ def friend_request_reject(request):
 
 @login_required
 def friend_remove(request, username):
-    Friends.remove_friends(request.user.id, username)
+    Friend.remove_friends(request.user.id, username)
     return redirect('user:profile', request.user.username)
 
 @login_required
 def show_friends(request, username):
-    context = {'friends': Friends.get_friends(request.user.id)}
+    context = {'friends': Friend.get_friends(request.user.id)}
 
     return render(request, 'friends_list.html', context)
 

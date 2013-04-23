@@ -2,7 +2,7 @@ from django.db import models, connection, transaction
 
 from game_atlas.utils.models import dict_fetch_all, dict_fetch_one
 
-class Friends(models.Model):
+class Friend(models.Model):
 
     class Meta:
         managed = False

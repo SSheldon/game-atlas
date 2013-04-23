@@ -5,7 +5,7 @@ from django.shortcuts import render
 import lists.views as lists_views
 import friends.views as friends_views
 
-from friends.models import Friends
+from friends.models import Friend
 from lists.models import UserGame
 
 def games(request, username):
@@ -24,9 +24,9 @@ def profile(request, username):
     user = get_object_or_404(User, username=username)
 
     context = {
-            'friends': Friends.get_friends(user.id), 
-            'games_list': UserGame.get_games(request.user.id), 
-            'page': user
+        'friends': Friend.get_friends(user.id),
+        'games_list': UserGame.get_games(request.user.id),
+        'page': user,
     }
-    
+
     return render(request, 'profile1.html', context)
