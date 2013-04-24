@@ -1,0 +1,9 @@
+Following is the basic idea for the collaborative filtering algorithm:
+
+First, the algorithm will create a 2D matrix of Users x Games, where each (i, j) is 1 if User i owns Game j, 0 otherwise.
+
+This matrix will be used as the basis for a Vector Space Model Search (see http://en.wikipedia.org/wiki/Vector_space_model#Applications). The algorithm will iterate through each User, using that User as the query for the search.
+
+This will give a ranking of all Users relative to the current User. The Users should then be sorted from high to low according to the rankings. From here, we should iterate through each game of the sorted list of Users, and the first x (maybe 20-30?) games encountered that the current User doesn't own should be added to their personal recommendation list.
+
+Repeat the above for each user.
