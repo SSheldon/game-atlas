@@ -1,4 +1,5 @@
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from games.models import Genre, Game, Release
 
@@ -36,6 +37,7 @@ def game_edit(request, game_id):
         context = {'game': Game.select(game_id), 'genres': Genre.select_all()}
         return render(request, 'games/edit.html', context)
 
-def game_delete(request, game_id):
-    Game.delete(game_id)
+@require_POST
+def game_delete(request):
+    Game.delete(request.POST['game_id'])
     return redirect('games:index')
