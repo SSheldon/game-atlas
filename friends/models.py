@@ -60,6 +60,23 @@ class Friend(models.Model):
         cursor.execute(query, (user_id,))
 
         return dict_fetch_all(cursor)
+
+    @staticmethod
+    def get_pending_friends(user_id):
+        cursor = connection.cursor()
+
+        query = """
+            SELECT A.user_id, username
+            FROM friend AS A
+            LEFT JOIN friend as B ON A.friend_id=B.user_id AND
+                                     A.user_id=B.friend_id
+            INNER JOIN auth_user ON A.user_id=auth_user.id
+            WHERE A.friend_id = %s AND B.friend_id IS NULL
+        """
+        cursor.execute(query, (user_id,))
+
+        return dict_fetch_all(cursor)
+
     @staticmethod
     def find_user(user_id):
         cursor = connection.cursor()
