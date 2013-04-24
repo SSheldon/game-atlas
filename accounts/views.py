@@ -2,12 +2,7 @@ from django.conf import settings
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
-
-@login_required
-def profile(request):
-    return HttpResponse("You have successfully logged in.")
 
 def signup(request):
     if request.method == 'POST':
@@ -26,3 +21,11 @@ def signup(request):
 
     context = {'form': form}
     return render(request, 'registration/signup.html', context)
+
+@login_required
+def profile(request):
+    return redirect('users:profile', request.user.username)
+
+@login_required
+def games(request):
+    return redirect('users:games', request.user.username)
