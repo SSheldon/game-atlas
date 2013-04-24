@@ -17,6 +17,16 @@
         <input type="submit" value="Delete" />
       </form>
     </td>
+    {% if user.is_authenticated %}
+    <td>
+      <form action="{% url 'accounts:add_game' %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="hidden" name="game_id" value="{{ game.id }}" />
+        <input type="submit" value="Add" />
+      </form>
+    </td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>
