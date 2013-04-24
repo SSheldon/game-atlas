@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 <form action="{% url 'accounts:login' %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
@@ -5,3 +8,4 @@
 </form>
 
 Or <a href="{% url 'accounts:signup' %}">sign up</a> to get started!
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if games_list %}
 <table style="border-collapse:collapse" border="1">
   <tr>
@@ -39,3 +42,4 @@
 <a href="{% url 'games:releases' %}">Game Releases</a>
 <br />
 <a href="{% url 'accounts:signup' %}">Sign up</a>
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if game %}
 <form action="{% url 'games:game_edit' game.id %}" method="post">
 {% else %}
@@ -21,3 +24,4 @@
   <br />
   <input type="submit" value="Save" />
 </form>
+{% endblock %}
