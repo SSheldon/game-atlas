@@ -24,18 +24,6 @@ def user_game_vector(user_games, game_indices):
         game_vector[game_indices[game_id]] = 1
     return game_vector
 
-# Replace with code to select from user_game
-# Create 2d matrix where rows are users and columns are games
-# We may need additional dictionaries to map row indexes to user_ids
-# and column indexes to game_ids
-UserGames = [
-		[1, 1, 0, 1],
-		[0, 0, 1, 1],
-		[1, 0, 0, 0],
-		[0, 1, 1, 0],
-		[1, 0, 1, 0]
-	]
-
 def recommend(currentUser, UserGames):
 	rankings = {}
 	for j, otherUser in enumerate(UserGames):
@@ -60,7 +48,3 @@ def recommend_games(user_id, all_user_games, games):
     ]
     recommended_indexes = recommend(game_vector, all_game_vectors)
     return [game_indices[i] for i in recommended_indexes]
-
-for currentUser in UserGames:
-	# Replace this with code to insert into database
-	print recommend(currentUser, UserGames)
