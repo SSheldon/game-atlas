@@ -46,6 +46,6 @@ def search(request):
 @login_required
 def search_friends_games(request):
     if request.method == 'GET':
-        context = {'games': Friend.search_friends_games(request.GET['my_id'], request.GET['search'])}
+        context = {'games': Friend.search_friends_games(request.user.id, request.GET['search'])}
         return render(request, "search_games.html", context)
 
