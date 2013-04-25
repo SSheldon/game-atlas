@@ -29,3 +29,7 @@ def profile(request):
 @login_required
 def games(request):
     return redirect('users:games', request.user.username)
+
+@login_required
+def friends(request):
+    return redirect('users:friends', request.user.username)

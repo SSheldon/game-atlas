@@ -11,7 +11,7 @@
       <a href="">{{ friend.username }}</a>
     </td>
     <td>
-      <form action="{% url 'users:accept_friend' friend.username %}" method="post"
+      <form action="{% url 'accounts:accept_friend' %}" method="post"
             style="display:inline">
         {% csrf_token %}
         <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />
@@ -19,7 +19,7 @@
       </form>
     </td>
     <td>
-      <form action="{% url 'users:reject_friend' friend.username %}" method="post"
+      <form action="{% url 'accounts:reject_friend' %}" method="post"
             style="display:inline">
         {% csrf_token %}
         <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />

@@ -6,7 +6,7 @@
 {% include "lists/games.html" %}
 
 {% if user.username != page.username %}
-      <form action="{% url 'users:send_friend_request' page.username %}" method="post"
+      <form action="{% url 'accounts:request_friend' %}" method="post"
             style="display:inline">
         {% csrf_token %}
         <input type="hidden" name="friend_id" id="friend_id" value="{{ page.id }}" />

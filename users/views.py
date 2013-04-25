@@ -16,20 +16,6 @@ def friends(request, username):
     user = get_object_or_404(User, username=username)
     return friends_views.show_friends(request, user.id)
 
-def remove_friend(request, username):
-    user = get_object_or_404(User, username=username)
-    return friends_views.friend_remove(request)
-
-def send_friend_request(request, username):
-    user = get_object_or_404(User, username=username)
-    return friends_views.friend_request_send(request)
-
-def accept_friend(request, username):
-    return friends_views.friend_request_accept(request)
-
-def reject_friend(request, username):
-    return friends_views.friend_request_reject(request)
-
 def profile(request, username):
     user = get_object_or_404(User, username=username)
 
