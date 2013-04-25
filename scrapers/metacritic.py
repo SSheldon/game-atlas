@@ -33,6 +33,21 @@ def get_release(soup):
         if span.string == 'Release Date:':
             return span.findNext('span').string
 
+def get_name(soup):
+    ret_val = soup.find('span', {'class': 'product_name'})
+    if ret_val is None:
+        return None
+    else:
+        return ret_val.string
+
+def get_platform(soup):
+    val = soup.find('span', {'class': 'platform'})
+    ret_val = val.findNext('a')
+    if ret_val is None:
+        return None
+    else:
+        return ret_val.string
+
 def fix_string(s):
     s = s.lower()
     s = re.sub('[.!,;:]', '', s)
@@ -48,6 +63,8 @@ def get_info(game, platform):
     soup = BeautifulSoup(url)
     info_dict = {}
 
+    info_dict['title'] = get_name(soup)
+    info_dict['platform'] = get_platform(soup)
     info_dict['score'] = get_score(soup)
     info_dict['esrb'] = get_esrb(soup)
     info_dict['developer'] = get_developer(soup)
