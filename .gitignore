@@ -1,3 +1,4 @@
 *.py[cod]
-venv
-postgres
+/venv
+/postgres
+/static
