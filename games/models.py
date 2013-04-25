@@ -77,6 +77,15 @@ class Game(models.Model):
         cursor.execute(query, (game_id,))
         transaction.commit_unless_managed()
 
+    @staticmethod
+    def find(title):
+        cursor = connection.cursor()
+        search= title + "%"
+        query = 'SELECT title FROM game WHERE title LIKE %s'
+        cursor.execute(query, (search,))
+
+        return dict_fetch_all(cursor)
+
 class Platform(models.Model):
 
     class Meta:

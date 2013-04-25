@@ -41,3 +41,8 @@ def game_edit(request, game_id):
 def game_delete(request):
     Game.delete(request.POST['game_id'])
     return redirect('games:index')
+
+def game_search(request):
+    if request.method == 'GET':
+        context = {'games': Game.find(request.GET['title'])}
+        return render(request, 'games/search.html', context)
