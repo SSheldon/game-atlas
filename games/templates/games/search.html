@@ -7,5 +7,10 @@
     <a href="">{{ game.title }}</a>
     <br />
 {% endfor%}
+<p> Not here? Add it to our database </p>
+<a href="">Add a game</a>
+{% else %}
+<p> It appears this game isn't in our database, would you like to add it? </p>
+<a href="">Add Game</a>
 {% endif %}
 {% endblock %}
