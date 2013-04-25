@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+<p> Search results:</p>
+{% if users %}
+{% for user in users %}
+    <a href="">{{ user.username }}</a>
+    <br />
+{% endfor%}
+{% endif %}
+{% endblock %}

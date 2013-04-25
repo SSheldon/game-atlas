@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<p> Search results:</p>
+{% if games %}
+{% for game in games %}
+  <table style="border-collapse:collapse" border="1">
+  <tr>
+    <th>Name</th>
+    <th>Title</th>
+  </tr>
+  {% for game in games %}
+  <tr>
+    <td>
+      <a href="">{{ game.username }}</a>
+    </td>
+    <td>
+      <a href="">{{game.title}}</a>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endfor%}
+{% endif %}
+{% endblock %}
