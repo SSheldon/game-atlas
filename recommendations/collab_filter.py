@@ -43,8 +43,8 @@ def recommend_games(user_id, all_user_games, games):
     game_indices = {game_id: i for i, game_id in enumerate(games)}
     game_vector = user_game_vector(all_user_games[user_id], game_indices)
     all_game_vectors = [
-        user_game_vector(games, game_indices)
-        for games in all_user_games.itervalues()
+        user_game_vector(user_games, game_indices)
+        for user_games in all_user_games.itervalues()
     ]
     recommended_indexes = recommend(game_vector, all_game_vectors)
-    return [game_indices[i] for i in recommended_indexes]
+    return [games[i] for i in recommended_indexes]
