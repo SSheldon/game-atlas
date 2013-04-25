@@ -17,6 +17,16 @@ def norm(Vector, power):
 def getRanking(UserA, UserB):
 	return dot(UserA, UserB)/(norm(UserA, 2)*norm(UserB, 2))
 
+def user_game_vectors(games, all_user_games):
+    # Create a mapping from game_id to its vector index
+    game_index = {game_id: i for i, game_id in enumerate(games)}
+    for user_id, user_games in all_user_games.iteritems():
+        game_vector = [0] * len(games)
+        # Set the bits for this user's games
+        for game_id in user_games:
+            game_vector[game_index[game_id]] = 1
+        # print user_id, game_vector
+        yield user_id, game_vector
 
 # Replace with code to select from user_game
 # Create 2d matrix where rows are users and columns are games
