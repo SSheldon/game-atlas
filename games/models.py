@@ -88,6 +88,23 @@ class Game(models.Model):
             return None
         return row[0]
 
+    #Used to check to make sure we aren't adding a game that is already in the db
+    @staticmethod
+    def add_game(title, genre_id):
+        cursor = connection.cursor()
+
+        query = """
+                    SELECT game.id, title FROM game
+                    INNER JOIN genre ON game.genre_id = genre.id
+                    WHERE game.title = %s AND genre.id = %s
+                """
+        cursor.execute(query, (title, genre_id,))
+
+        row = cursor.fetchone()
+        if not row:
+            Game.insert(title, genre_id)
+        return row[0]
+
     @staticmethod
     def update(game_id, title, genre_id):
         cursor = connection.cursor()
@@ -172,10 +189,10 @@ class Release(models.Model):
     def game_info(info_dict, title, platform):
 
         genre_id = Genre.get_genre_id(info_dict['genre'])
-        game_id = Game.insert(title, genre_id)
         platform_id = Platform.get_platform_id(platform)
-        
-        Release.insert(game_id, platform_id, info_dict['release'])
+        game_id = Game.add_game(title, genre_id)
+        if game_id is not None:
+            Release.insert(game_id, platform_id, info_dict['release'])
 
     @staticmethod
     def insert(game_id, platform_id, release_date):

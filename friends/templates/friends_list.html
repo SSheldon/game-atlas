@@ -6,7 +6,7 @@
   {% for friend in friends %}
   <tr>
     <td>
-      <a href="">{{ friend.username }}</a>
+      <a href="{% url 'users:profile' friend.username%}">{{ friend.username }}</a>
     </td>
     {% if user.username == page.username %}
     <td>
