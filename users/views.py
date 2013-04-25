@@ -20,6 +20,12 @@ def remove_friend(request, username):
     user = get_object_or_404(User, username=username)
     return friends_views.friend_remove(request, user.id)
 
+def accept_friend(request, username):
+    return friends_views.friend_request_accept(request)
+
+def reject_friend(request, username):
+    return friends_views.friend_request_reject(request)
+
 def profile(request, username):
     user = get_object_or_404(User, username=username)
 
@@ -27,6 +33,7 @@ def profile(request, username):
         'friends': Friend.get_friends(user.id),
         'games': UserGame.get_games(user.id),
         'page': user,
+        'pending_friends': Friend.get_pending_friends(user.id),
     }
 
     return render(request, 'users/profile.html', context)

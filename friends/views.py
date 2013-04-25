@@ -20,14 +20,14 @@ def friend_info(request, friend_id):
 @login_required
 def friend_request_accept(request):
     if request.method == 'POST':
-        accept_friends(request.user.id, request.POST['friends_id'])
+        Friend.accept_friends(request.user.id, request.POST['friend_id'])
 
     return redirect('accounts:profile')
 
 @login_required
 def friend_request_reject(request):
     if request.method == 'POST':
-        reject_friends(Request.user.id, request.POST['friends_id'])
+        Friend.reject_friend(request.user.id, request.POST['friend_id'])
     return redirect('accounts:profile')
 
 @login_required
@@ -42,3 +42,8 @@ def show_friends(request, username):
     return render(request, 'friends_list.html', context)
 
 
+@login_required
+def show_pending_friends(request, username):
+    context = {'pending_friends': Friend.get_pending_friends(request.user.id)}
+
+    return render(request, 'pending_friends', context)

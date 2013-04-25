@@ -1,0 +1,31 @@
+{% if pending_friends %}
+<table style="border-collapse:collapse" border="1">
+  <tr>
+    <th>Name</th>
+  </tr>
+  {% for friend in pending_friends %}
+  <tr>
+    <td>
+      <a href="">{{ friend.username }}</a>
+    </td>
+    <td>
+      <form action="{% url 'users:accept_friend' friend.username %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />
+        <input type="submit" value="Accept" />
+      </form>
+    </td>
+    <td>
+      <form action="{% url 'users:reject_friend' friend.username %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />
+        <input type="submit" value="Reject" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %}
+</table>
+{% endif %}
+<br />
