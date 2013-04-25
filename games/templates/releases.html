@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+
+{% block content %}
 {% if games_list %}
   <table style="border-collapse:collapse" border="1">
     <tr>
@@ -18,3 +21,4 @@
 {% else %}
   <p>Sorry, no games have been added.</p>
 {% endif %}
+{% endblock %}
