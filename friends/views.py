@@ -1,7 +1,6 @@
-from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.views.decorators.http import require_POST
 
 from friends.models import Friend
 
@@ -30,9 +29,10 @@ def friend_request_reject(request):
         Friend.reject_friend(request.user.id, request.POST['friend_id'])
     return redirect('accounts:profile')
 
+@require_POST
 @login_required
-def friend_remove(request, username):
-    Friend.remove_friends(request.user.id, username)
+def friend_remove(request):
+    Friend.remove_friends(request.user.id, request.POST['friend_id'])
     return redirect('accounts:profile')
 
 @login_required

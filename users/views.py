@@ -18,7 +18,7 @@ def friends(request, username):
 
 def remove_friend(request, username):
     user = get_object_or_404(User, username=username)
-    return friends_views.friend_remove(request, user.id)
+    return friends_views.friend_remove(request)
 
 def send_friend_request(request, username):
     user = get_object_or_404(User, username=username)
