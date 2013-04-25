@@ -43,4 +43,9 @@
 <a href="{% url 'games:releases' %}">Game Releases</a>
 <br />
 <a href="{% url 'accounts:signup' %}">Sign up</a>
+<br />
+<form action="{% url 'games:game_search' %}" method="get" style="display:inline">
+  <input type="text" name="title" value="Search">
+  <input type="submit" value="Search">
+</form>
 {% endblock %}
