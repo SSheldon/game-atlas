@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from games.models import Genre, Game, Release
+from scrapers.metacritic import get_info
 
 def releases(request):
     context = {'games_list': Release.select_all()}
@@ -49,5 +50,7 @@ def game_search(request):
 
 def game_add2(request):
     if request.method == 'POST':
-        Game.get_game_info(request.POST['title'], request.POST['platform'])
+        info_dict = get_info(request.POST['title'], request.POST['platform'])
+        Release.game_info(info_dict, request.POST['title'], request.POST['platform'])
+
     return redirect('games:index')
