@@ -17,16 +17,12 @@ def norm(Vector, power):
 def getRanking(UserA, UserB):
 	return dot(UserA, UserB)/(norm(UserA, 2)*norm(UserB, 2))
 
-def user_game_vectors(games, all_user_games):
-    # Create a mapping from game_id to its vector index
-    game_index = {game_id: i for i, game_id in enumerate(games)}
-    for user_id, user_games in all_user_games.iteritems():
-        game_vector = [0] * len(games)
-        # Set the bits for this user's games
-        for game_id in user_games:
-            game_vector[game_index[game_id]] = 1
-        # print user_id, game_vector
-        yield user_id, game_vector
+def user_game_vector(user_games, game_indices):
+    game_vector = [0] * len(game_indices)
+    # Set the bits for this user's games
+    for game_id in user_games:
+        game_vector[game_indices[game_id]] = 1
+    return game_vector
 
 # Replace with code to select from user_game
 # Create 2d matrix where rows are users and columns are games
@@ -53,6 +49,17 @@ def recommend(currentUser, UserGames):
 			if (otherUser[i] and not currentUser[i] and i not in recommendations):
 				recommendations.append(i)
 	return recommendations
+
+def recommend_games(user_id, all_user_games, games):
+    # Create a mapping from game_id to its vector index
+    game_indices = {game_id: i for i, game_id in enumerate(games)}
+    game_vector = user_game_vector(all_user_games[user_id], game_indices)
+    all_game_vectors = [
+        user_game_vector(games, game_indices)
+        for games in all_user_games.itervalues()
+    ]
+    recommended_indexes = recommend(game_vector, all_game_vectors)
+    return [game_indices[i] for i in recommended_indexes]
 
 for currentUser in UserGames:
 	# Replace this with code to insert into database
