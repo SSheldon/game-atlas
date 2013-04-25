@@ -14,4 +14,12 @@
       </form>
     {% endif %}
 <br />
+<br />
+{% if user.username == page.username %}
+<form action="{% url 'accounts:game_search' %}" method="get" style="display:inline">
+    <input type="hidden" name="my_id" value="{{user.id}}" />
+    <input type="text" name="search", value="Games your friends play" />
+    <input type="submit" value="Search"/>
+</form>
+{% endif %}
 {% endblock %}

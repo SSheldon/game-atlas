@@ -15,4 +15,5 @@ urlpatterns = patterns('',
     url(r'^friends/reject/$', 'friends.views.friend_request_reject', name='reject_friend'),
     url(r'^friends/remove/$', 'friends.views.friend_remove', name='remove_friend'),
     url(r'^search/$', views.search, name='search'),
+    url(r'^search/games$', views.search_friends_games, name="game_search"),
 )

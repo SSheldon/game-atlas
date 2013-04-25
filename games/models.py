@@ -138,7 +138,7 @@ class Platform(models.Model):
     def fetch_platform_id(cursor, platform):
         row = cursor.fetchone()
         if not row:
-            return Platform.add_genre(platform)
+            return Platform.add_platform(platform)
         else:
             return row[0]
 

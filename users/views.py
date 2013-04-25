@@ -27,3 +27,4 @@ def profile(request, username):
     }
 
     return render(request, 'users/profile.html', context)
+

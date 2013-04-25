@@ -47,3 +47,4 @@ def show_pending_friends(request, username):
     context = {'pending_friends': Friend.get_pending_friends(request.user.id)}
 
     return render(request, 'pending_friends', context)
+

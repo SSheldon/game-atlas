@@ -86,3 +86,20 @@ class Friend(models.Model):
 
         return dict_fetch_one(cursor)
 
+    @staticmethod
+    def search_friends_games(user_id, game_title):
+        cursor = connection.cursor()
+
+        title = "%" + game_title + "%"
+
+        query = """
+                SELECT title, username FROM
+                friend A 
+                INNER JOIN user_game B ON A.user_id = B.user_id
+                INNER JOIN game C ON B.game_id = C.id 
+                INNER JOIN auth_user D ON D.id = A.user_id
+                WHERE A.friend_id = %s AND C.title ILIKE %s
+            """
+        cursor.execute(query, (user_id, title,))
+
+        return dict_fetch_all(cursor)

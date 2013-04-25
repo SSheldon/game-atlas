@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User
+from friends.models import Friend
 
 def signup(request):
     if request.method == 'POST':
@@ -41,4 +42,10 @@ def search(request):
         result = User.objects.filter(username__icontains=request.GET['user']) 
         context = {'users': result}
         return render(request, 'search.html', context)
+
+@login_required
+def search_friends_games(request):
+    if request.method == 'GET':
+        context = {'games': Friend.search_friends_games(request.GET['my_id'], request.GET['search'])}
+        return render(request, "search_games.html", context)
 
