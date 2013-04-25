@@ -1,5 +1,5 @@
 CREATE TABLE release (
-    game_id INTEGER REFERENCES game(id),
+    game_id INTEGER REFERENCES game(id) ON DELETE CASCADE,
     platform_id INTEGER REFERENCES platform(id),
     release_date DATE,
     PRIMARY KEY(game_id, platform_id)
