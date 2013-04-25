@@ -18,10 +18,10 @@ def getRanking(UserA, UserB):
 	return dot(UserA, UserB)/(norm(UserA, 2)*norm(UserB, 2))
 
 
-# Create matrix of Users x Games
-# Each row should be a User
-# Each column should be a Game
-	# For testing
+# Replace with code to select from user_game
+# Create 2d matrix where rows are users and columns are games
+# We may need additional dictionaries to map row indexes to user_ids
+# and column indexes to game_ids
 UserGames = [
 		[1, 1, 0, 1],
 		[0, 0, 1, 1],
@@ -30,8 +30,17 @@ UserGames = [
 		[1, 0, 1, 0]
 	]
 
-for currentUser in UserGames:
+for i, currentUser in enumerate(UserGames):
 	rankings = {}
-	for i, otherUser in enumerate(UserGames):
-		rankings[i] = getRanking(currentUser, otherUser)
-	print rankings
+	for j, otherUser in enumerate(UserGames):
+		rankings[j] = getRanking(currentUser, otherUser)
+	rankings = list(reversed(sorted(rankings.items(), key=lambda x: x[1])))
+	
+	recommendations = []
+	for ranking in rankings:
+		otherUser = UserGames[ranking[0]]
+		for i in range(0, len(otherUser)):
+			if (otherUser[i] and not currentUser[i] and i not in recommendations):
+				recommendations.append(i)
+	# Replace this with code to insert into database
+	print recommendations
