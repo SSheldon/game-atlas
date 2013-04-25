@@ -3,18 +3,20 @@ import urllib
 import re
 
 def get_score(soup):
-    return soup.find('span', {'class':'score_value', 'property':'v:average'}).string
-        #We will need to trim this somehow, but it returns the right score
-
+    ret_val = soup.find('span', {'class':'score_value', 'property':'v:average'})
+    if ret_val is None:
+        return None
+    else:
+        return ret_val.string
 def get_developer(soup):
-	for span in soup.findAll('span', {'class': 'label'}):
-		if span.string == 'Developer:':
-			return span.findNext('span').string.strip()
+    for span in soup.findAll('span', {'class': 'label'}):
+        if span.string == 'Developer:':
+            return span.findNext('span').string.strip()
 
 def get_esrb(soup):
-	for span in soup.findAll('span', {'class': 'label'}):
-		if span.string == 'Rating:':
-			return span.findNext('span').string
+    for span in soup.findAll('span', {'class': 'label'}):
+        if span.string == 'Rating:':
+            return span.findNext('span').string
 
 def get_genre(soup):
     for span in soup.findAll('span', {'class': 'label'}):
@@ -22,9 +24,9 @@ def get_genre(soup):
             return span.findNext('span').string
 
 def get_publisher(soup):
-	for span in soup.findAll('span', {'class': 'label'}):
-		if span.string == 'Publisher:':
-			return span.findNext('a').string.strip()
+    for span in soup.findAll('span', {'class': 'label'}):
+        if span.string == 'Publisher:':
+            return span.findNext('a').string.strip()
 
 def get_release(soup):
     for span in soup.findAll('span', {'class': 'label'}):
