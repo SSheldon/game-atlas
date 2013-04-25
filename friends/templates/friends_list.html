@@ -8,13 +8,16 @@
     <td>
       <a href="">{{ friend.username }}</a>
     </td>
+    {% if user.username == page.username %}
     <td>
       <form action="{% url 'users:remove_friend' friend.username %}" method="post"
             style="display:inline">
         {% csrf_token %}
+        <input type="hidden" name="friend_id" value="{{ friend.id }}" />
         <input type="submit" value="Remove" />
       </form>
     </td>
+    {% endif %}
   </tr>
   {% endfor %}
 </table>
