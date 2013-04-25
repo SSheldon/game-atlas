@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from django.db import connection, transaction
 from django.db.models import Model
 
@@ -39,3 +41,19 @@ class UserGame(Model):
         query = 'DELETE FROM user_game WHERE user_id = %s AND game_id = %s'
         cursor.execute(query, (user_id, game_id))
         transaction.commit_unless_managed()
+
+    @staticmethod
+    def get_all_lists():
+        user_games = defaultdict(list)
+        games = set()
+
+        cursor = connection.cursor()
+        cursor.execute('SELECT user_id, game_id FROM user_game')
+        row = cursor.fetchone()
+        while row:
+            user_id, game_id = row
+            user_games[user_id].append(game_id)
+            games.add(game_id)
+            row = cursor.fetchone()
+
+        return user_games, games
