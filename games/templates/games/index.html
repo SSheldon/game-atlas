@@ -45,7 +45,12 @@
 <a href="{% url 'accounts:signup' %}">Sign up</a>
 <br />
 <form action="{% url 'games:game_search' %}" method="get" style="display:inline">
-  <input type="text" name="title" value="Search">
+  <input type="text" name="title" value="Search for Games">
+  <input type="submit" value="Search">
+</form>
+<br \>
+<form action="{% url 'accounts:search' %}" method="get" style="display:inline">
+  <input type="text" name="user" value="Search for Users">
   <input type="submit" value="Search">
 </form>
 {% endblock %}
