@@ -1,4 +1,6 @@
+{% if user.username == page.username %}
 {% if pending_friends %}
+<p> Pending friend requests </p>
 <table style="border-collapse:collapse" border="1">
   <tr>
     <th>Name</th>
@@ -27,5 +29,6 @@
   </tr>
   {% endfor %}
 </table>
+{% endif %}
 {% endif %}
 <br />
