@@ -93,12 +93,12 @@ class Friend(models.Model):
         title = "%" + game_title + "%"
 
         query = """
-                SELECT title, username FROM
-                friend A 
-                INNER JOIN user_game B ON A.user_id = B.user_id
-                INNER JOIN game C ON B.game_id = C.id 
-                INNER JOIN auth_user D ON D.id = A.user_id
-                WHERE A.friend_id = %s AND C.title ILIKE %s
+                SELECT title, username, game_id AS "id" FROM
+                friend 
+                INNER JOIN user_game ON friend.user_id = user_game.user_id
+                INNER JOIN game ON user_game.game_id = game.id 
+                INNER JOIN auth_user ON auth_user.id = friend.user_id
+                WHERE friend.friend_id = %s AND game.title ILIKE %s
             """
         cursor.execute(query, (user_id, title,))
 

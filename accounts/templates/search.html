@@ -3,7 +3,7 @@
 <p> Search results:</p>
 {% if users %}
 {% for user in users %}
-    <a href="">{{ user.username }}</a>
+    <a href="{% url 'users:profile' user.username %}">{{ user.username }}</a>
     <br />
 {% endfor%}
 {% endif %}

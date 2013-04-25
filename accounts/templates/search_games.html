@@ -1,24 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 <p> Search results:</p>
-{% if games %}
-{% for game in games %}
-  <table style="border-collapse:collapse" border="1">
+{% if results %}
+<table style="border-collapse:collapse" border="1">
   <tr>
     <th>Name</th>
     <th>Title</th>
   </tr>
-  {% for game in games %}
+{% for result in results %}
   <tr>
     <td>
-      <a href="">{{ game.username }}</a>
+      <a href="{% url 'users:profile' result.username% }">{{ result.username }}</a>
     </td>
     <td>
-      <a href="">{{game.title}}</a>
+      <a href="{% url 'games:game_edit' result.id %}">{{result.title}}</a>
     </td>
   </tr>
-  {% endfor %}
-</table>
 {% endfor%}
+</table>
 {% endif %}
 {% endblock %}

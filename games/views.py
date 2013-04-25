@@ -51,6 +51,8 @@ def game_search(request):
 def game_add2(request):
     if request.method == 'POST':
         info_dict = get_info(request.POST['title'], request.POST['platform'])
+        if info_dict is None:
+            return redirect('games:index')
         Release.game_info(info_dict, request.POST['title'], request.POST['platform'])
 
     return redirect('games:index')
