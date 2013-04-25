@@ -20,6 +20,10 @@ def remove_friend(request, username):
     user = get_object_or_404(User, username=username)
     return friends_views.friend_remove(request, user.id)
 
+def send_friend_request(request, username):
+    user = get_object_or_404(User, username=username)
+    return friends_views.friend_request_send(request)
+
 def accept_friend(request, username):
     return friends_views.friend_request_accept(request)
 

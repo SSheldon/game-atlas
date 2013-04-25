@@ -6,9 +6,9 @@ from django.shortcuts import redirect, render
 from friends.models import Friend
 
 @login_required
-def friend_request_send(request, username):
+def friend_request_send(request):
     if request.method == 'POST':
-        friend_id = request.POST['username']
+        friend_id = request.POST['friend_id']
         Friend.add_friends(request.user.id, friend_id)
 
     return redirect('accounts:profile')

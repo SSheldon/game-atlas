@@ -5,6 +5,13 @@
 
 {% include "lists/games.html" %}
 
-<a href="">Add as friend</a>
+{% if user.username != page.username %}
+      <form action="{% url 'users:send_friend_request' page.username %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="hidden" name="friend_id" id="friend_id" value="{{ page.id }}" />
+        <input type="submit" value="Send Friend Request" />
+      </form>
+    {% endif %}
 <br />
 {% endblock %}
