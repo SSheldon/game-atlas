@@ -8,13 +8,15 @@
   {% for friend in pending_friends %}
   <tr>
     <td>
-      <a href="">{{ friend.username }}</a>
+      <a href="{% url 'users:profile' friend.username %}">
+        {{ friend.username }}
+      </a>
     </td>
     <td>
       <form action="{% url 'accounts:accept_friend' %}" method="post"
             style="display:inline">
         {% csrf_token %}
-        <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />
+        <input type="hidden" name="friend_id" value="{{ friend.id }}" />
         <input type="submit" value="Accept" />
       </form>
     </td>
@@ -22,7 +24,7 @@
       <form action="{% url 'accounts:reject_friend' %}" method="post"
             style="display:inline">
         {% csrf_token %}
-        <input type="hidden" name="friend_id" id="friend_id" value="{{ friend.user_id }}" />
+        <input type="hidden" name="friend_id" value="{{ friend.id }}" />
         <input type="submit" value="Reject" />
       </form>
     </td>

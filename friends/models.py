@@ -66,7 +66,7 @@ class Friend(models.Model):
         cursor = connection.cursor()
 
         query = """
-            SELECT A.user_id, username
+            SELECT auth_user.id, auth_user.username
             FROM friend AS A
             LEFT JOIN friend as B ON A.friend_id=B.user_id AND
                                      A.user_id=B.friend_id
