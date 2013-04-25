@@ -30,7 +30,7 @@ UserGames = [
 		[1, 0, 1, 0]
 	]
 
-for i, currentUser in enumerate(UserGames):
+def recommend(currentUser, UserGames):
 	rankings = {}
 	for j, otherUser in enumerate(UserGames):
 		rankings[j] = getRanking(currentUser, otherUser)
@@ -42,5 +42,8 @@ for i, currentUser in enumerate(UserGames):
 		for i in range(0, len(otherUser)):
 			if (otherUser[i] and not currentUser[i] and i not in recommendations):
 				recommendations.append(i)
+	return recommendations
+
+for currentUser in UserGames:
 	# Replace this with code to insert into database
-	print recommendations
+	print recommend(currentUser, UserGames)
