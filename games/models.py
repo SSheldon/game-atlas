@@ -80,8 +80,8 @@ class Game(models.Model):
     @staticmethod
     def find(title):
         cursor = connection.cursor()
-        search= title + "%"
-        query = 'SELECT title FROM game WHERE title LIKE %s'
+        search= "%" + title + "%"
+        query = 'SELECT title FROM game WHERE title ILIKE %s'
         cursor.execute(query, (search,))
 
         return dict_fetch_all(cursor)

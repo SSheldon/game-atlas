@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
 <p> Search results:</p>
-<br />
+<br>
 {% if games %}
-{% for game in games %}\
+{% for game in games %}
     <a href="">{{ game.title }}</a>
     <br />
 {% endfor%}
