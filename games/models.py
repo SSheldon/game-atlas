@@ -101,8 +101,8 @@ class Game(models.Model):
         cursor.execute(query, (title, genre_id,))
 
         row = cursor.fetchone()
-        if not row:
-            Game.insert(title, genre_id)
+        if row is None:
+            return Game.insert(title, genre_id)
         return row[0]
 
     @staticmethod
@@ -186,11 +186,11 @@ class Release(models.Model):
         return dict_fetch_all(cursor)
 
     @staticmethod
-    def game_info(info_dict, title, platform):
+    def game_info(info_dict):
 
         genre_id = Genre.get_genre_id(info_dict['genre'])
-        platform_id = Platform.get_platform_id(platform)
-        game_id = Game.add_game(title, genre_id)
+        platform_id = Platform.get_platform_id(info_dict['platform'])
+        game_id = Game.add_game(info_dict['title'], genre_id)
         if game_id is not None:
             Release.insert(game_id, platform_id, info_dict['release'])
 
