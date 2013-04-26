@@ -89,6 +89,18 @@ class Game(models.Model):
         return dict_fetch_all(cursor)
 
     @staticmethod
+    def select_many_by_title(titles):
+        cursor = connection.cursor()
+
+        query = """
+            SELECT id, title, FROM game
+            WHERE title = ANY(%s)
+        """
+        cursor.execute(query, (game_ids,))
+
+        return dict_fetch_all(cursor)
+
+    @staticmethod
     def insert(title, genre_id):
         cursor = connection.cursor()
 

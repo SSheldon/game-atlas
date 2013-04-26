@@ -5,6 +5,7 @@ from django.views.decorators.http import require_POST
 from games.models import Game
 from lists.models import UserGame
 from recommendations.collab_filter import recommend_games
+from scrapers.xbox import get_games
 
 @require_POST
 @login_required
@@ -28,3 +29,10 @@ def recommended_games(request):
     recommended_ids = recommend_games(request.user.id, lists, list(games))
     context = {'games_list': Game.select_many(recommended_ids)}
     return render(request, 'games/index.html', context)
+
+@login_required
+def import_xbox_games(request):
+    if request.method == 'POST':
+        titles = get_games(request.POST['gamertag'])
+        games = Games.select_many_by_title(titles)
+    return None
