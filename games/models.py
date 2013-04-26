@@ -125,7 +125,7 @@ class Game(models.Model):
     def find(title):
         cursor = connection.cursor()
         search= "%" + title + "%"
-        query = 'SELECT title FROM game WHERE title ILIKE %s'
+        query = 'SELECT id, title FROM game WHERE title ILIKE %s'
         cursor.execute(query, (search,))
 
         return dict_fetch_all(cursor)

@@ -1,16 +1,23 @@
 {% extends "base.html" %}
+
 {% block content %}
-<p> Search results:</p>
-<br>
+<form action="{% url 'games:game_search' %}" method="get" style="display:inline">
+  <input type="text" name="title" value="{{ request.GET.title }}"
+         placeholder="Search for Games">
+  <input type="submit" value="Search">
+</form>
+
 {% if games %}
+<p>Search results:</p>
+<ul>
 {% for game in games %}
-    <a href="">{{ game.title }}</a>
-    <br />
+  <li><a href="{% url 'games:game_detail' game.id %}">{{ game.title }}</a></li>
 {% endfor%}
+</ul>
 <p> Not here? Add it to our database </p>
-<a href="">Add a game</a>
-{% else %}
+<p><a href="{% url 'games:game_add' %}">Add a game</a></p>
+{% elif request.GET.title %}
 <p> It appears this game isn't in our database, would you like to add it? </p>
-<a href="">Add Game</a>
+<p><a href="{% url 'games:game_add' %}">Add a game</a></p>
 {% endif %}
 {% endblock %}
