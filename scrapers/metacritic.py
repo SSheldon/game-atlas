@@ -93,7 +93,7 @@ def get_info(game, platform):
         info_dict['genre'] =  get_genre(soup)
         info_dict['publisher'] = get_publisher(soup)
         info_dict['release'] =  get_release(soup)
-        if (info_dict['release'] != 'TBA'):
+        if ('TBA' not in info_dict['release']):
            info_list.append(info_dict)
 	
     return info_list
