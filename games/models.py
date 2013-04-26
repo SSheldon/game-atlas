@@ -56,7 +56,7 @@ class Game(models.Model):
 
         query = """
             SELECT game.id, game.title, genre.name as "genre_name"
-            FROM game JOIN genre ON game.genre_id=genre.id
+            FROM game JOIN genre ON game.genre_id=genre.id ORDER BY game.title
         """
         cursor.execute(query)
 
