@@ -13,12 +13,16 @@ def user_games(request, user_id):
 @require_POST
 @login_required
 def add_game(request, next_page='accounts:games'):
+    if 'next' in request.POST:
+        next_page = request.POST['next']
     UserGame.add_game(request.user.id, request.POST['game_id'])
     return redirect(next_page)
 
 @require_POST
 @login_required
 def remove_game(request, next_page='accounts:games'):
+    if 'next' in request.POST:
+        next_page = request.POST['next']
     UserGame.remove_game(request.user.id, request.POST['game_id'])
     return redirect(next_page)
 
