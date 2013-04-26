@@ -2,11 +2,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
-from games.models import Game
+from games.models import Game, Release
 from lists.models import UserGame
 from recommendations.collab_filter import recommend_games
 from scrapers.xbox import get_games
 from scrapers.steam import get_all_game_names
+from scrapers.metacritic import get_info
 
 @require_POST
 @login_required
@@ -45,6 +46,18 @@ def import_xbox_games(request):
 def import_steam_games(request):
     titles = get_all_game_names(request.POST['gamer_id'])
     games = Game.select_many_by_title(titles)
-    game_ids = [game['id'] for game in games]
-    UserGame.add_games(request.user.id, game_ids)
+
+    # TODO(ssheldon): Oh god this code makes my eyes bleed
+    game_ids = {game['title']: game['id'] for game in games}
+    for title in titles:
+        if not title in game_ids:
+            try:
+                for info_dict in get_info(title, 'PC'):
+                    if info_dict:
+                        game_id = Release.game_info(info_dict)
+                        game[title] = game_id
+            except:
+                continue
+
+    UserGame.add_games(request.user.id, game_ids.values())
     return redirect('accounts:games')

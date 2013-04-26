@@ -236,6 +236,7 @@ class Release(models.Model):
         game_id = Game.add_game(info_dict['title'], genre_id)
         if game_id is not None:
             Release.insert(game_id, platform_id, info_dict['release'])
+        return game_id
 
     @staticmethod
     def insert(game_id, platform_id, release_date):
