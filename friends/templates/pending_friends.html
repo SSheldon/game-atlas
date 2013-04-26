@@ -1,4 +1,4 @@
-{% if user.username == page.username %}
+{% if user.is_authenticated and user.id == profile.id %}
 {% if pending_friends %}
 <p> Pending friend requests </p>
 <table style="border-collapse:collapse" border="1">

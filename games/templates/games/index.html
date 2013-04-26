@@ -27,6 +27,7 @@
             style="display:inline">
         {% csrf_token %}
         <input type="hidden" name="game_id" value="{{ game.id }}" />
+        <input type="hidden" name="next" value="{{ request.path }}" />
         <input type="submit" value="Add" />
       </form>
     </td>

@@ -76,6 +76,19 @@ class Game(models.Model):
         return dict_fetch_one(cursor)
 
     @staticmethod
+    def select_many(game_ids):
+        cursor = connection.cursor()
+
+        query = """
+            SELECT game.id, title, genre_id, genre.name as "genre_name"
+            FROM game JOIN genre ON game.genre_id=genre.id
+            WHERE game.id = ANY(%s)
+        """
+        cursor.execute(query, (game_ids,))
+
+        return dict_fetch_all(cursor)
+
+    @staticmethod
     def insert(title, genre_id):
         cursor = connection.cursor()
 
@@ -127,6 +140,24 @@ class Game(models.Model):
         search= "%" + title + "%"
         query = 'SELECT id, title FROM game WHERE title ILIKE %s'
         cursor.execute(query, (search,))
+
+        return dict_fetch_all(cursor)
+
+    @staticmethod
+    def game_detail(game_id):
+        cursor = connection.cursor()
+
+        query = """
+                SELECT game.title, release.release_date, 
+                genre.name AS "genre_name", platform.name as "platform_name"
+                FROM release
+                JOIN game on release.game_id = game.id
+                JOIN platform on release.platform_id = platform.id
+                JOIN genre ON game.genre_id = genre.id
+                WHERE game.id = %s
+            """ 
+
+        cursor.execute(query, (game_id,))
 
         return dict_fetch_all(cursor)
 
@@ -202,3 +233,22 @@ class Release(models.Model):
 
         cursor.execute(query, (game_id, platform_id, release_date,))
         transaction.commit_unless_managed()
+
+    @staticmethod
+    def get_game_releases(game_id):
+        cursor = connection.cursor()
+
+        query = """
+            SELECT game.title, release.release_date,
+            genre.name as "genre_name", platform.name as "platform_name"
+            FROM release
+            JOIN game ON release.game_id=game.id
+            JOIN platform ON release.platform_id=platform.id
+            JOIN genre ON game.genre_id=genre.id
+            WHERE game_id = %s
+        """
+
+        cursor.execute(query, (game_id,))
+
+        return dict_fetch_all(cursor)
+
