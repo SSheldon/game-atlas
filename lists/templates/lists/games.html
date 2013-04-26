@@ -10,7 +10,7 @@
       <a href="{% url 'games:game_detail' game.id %}">{{ game.title }}</a>
     </td>
     <td>{{ game.genre_name }}</td>
-    {% if user.is_authenticated and user.id == page.id %}
+    {% if user.is_authenticated and user.id == profile.id %}
     <td>
       <form action="{% url 'accounts:remove_game' %}" method="post"
             style="display:inline">

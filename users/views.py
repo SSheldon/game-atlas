@@ -22,7 +22,7 @@ def profile(request, username):
     context = {
         'friends': Friend.get_friends(user.id),
         'games': UserGame.get_games(user.id),
-        'page': user,
+        'profile': user,
         'pending_friends': Friend.get_pending_friends(user.id),
     }
 
