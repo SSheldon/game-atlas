@@ -76,6 +76,19 @@ class Game(models.Model):
         return dict_fetch_one(cursor)
 
     @staticmethod
+    def select_many(game_ids):
+        cursor = connection.cursor()
+
+        query = """
+            SELECT game.id, title, genre_id, genre.name as "genre_name"
+            FROM game JOIN genre ON game.genre_id=genre.id
+            WHERE game.id = ANY(%s)
+        """
+        cursor.execute(query, (game_ids,))
+
+        return dict_fetch_all(cursor)
+
+    @staticmethod
     def insert(title, genre_id):
         cursor = connection.cursor()
 
