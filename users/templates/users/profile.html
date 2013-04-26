@@ -20,5 +20,14 @@
     <input type="text" name="search", value="Games your friends play" />
     <input type="submit" value="Search"/>
 </form>
+<br />
+<a href="">Import Library From Xbox</a>
+<br />
+<form action="{% url 'accounts:import_xbox_games' %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="text" name="gamer_id" value="" />
+        <input type="submit" value="Import from Xbox"/>
+</form>
 {% endif %}
 {% endblock %}
