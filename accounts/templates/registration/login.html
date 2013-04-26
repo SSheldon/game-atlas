@@ -4,6 +4,7 @@
 <form action="{% url 'accounts:login' %}" method="post">
   {% csrf_token %}
   {{ form.as_p }}
+  <input type="hidden" name="next" value="{{ request.GET.next }}" />
   <input type="submit" value="Log in" />
 </form>
 
