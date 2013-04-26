@@ -36,12 +36,12 @@ def games(request):
 def friends(request):
     return redirect('users:friends', request.user.username)
 
-@login_required
 def search(request):
-    if request.method == 'GET':
+    context = {}
+    if 'user' in request.GET:
         result = User.objects.filter(username__icontains=request.GET['user']) 
-        context = {'users': result}
-        return render(request, 'search.html', context)
+        context['users'] = result
+    return render(request, 'users/search.html', context)
 
 @login_required
 def search_friends_games(request):

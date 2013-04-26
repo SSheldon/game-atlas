@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{% url 'accounts:search' %}" method="get" style="display:inline">
+  <input type="text" name="user" value="{{ request.GET.user }}"
+         placeholder="Search for Users">
+  <input type="submit" value="Search">
+</form>
+
+{% if users %}
+<p>Search results:</p>
+<ul>
+{% for user in users %}
+  <li><a href="{% url 'users:profile' user.username %}">{{ user.username }}</a></li>
+{% endfor %}
+</ul>
+{% elif request.GET.user %}
+<p>Sorry, there are no users with this username.</p>
+{% endif %}
+{% endblock %}
