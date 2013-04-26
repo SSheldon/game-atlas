@@ -61,7 +61,7 @@ def is404(soup):
 
 def fix_string(s):
     s = s.lower()
-    s = re.sub('[.!,;:]', '', s)
+    s = re.sub('[^a-zA-Z0-9 ]', '',  s)
     s = s.replace(' ', '-')
     return s
 
@@ -69,6 +69,9 @@ def fix_string(s):
 def get_info(game, platform):
     game = fix_string(game)
     platform = fix_string(platform)
+   
+    if not game or not platform:
+	    return []
     
     url = urllib2.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
     soups = [BeautifulSoup(url)]
