@@ -42,11 +42,7 @@ def get_name(soup):
 
 def get_platform(soup):
     val = soup.find('span', {'class': 'platform'})
-    ret_val = val.findNext('a')
-    if ret_val is None:
-        return None
-    else:
-        return ret_val.string
+    return val.findNext('a').string.strip()
 
 def fix_string(s):
     s = s.lower()
