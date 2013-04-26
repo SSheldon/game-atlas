@@ -13,8 +13,9 @@ def index(request):
     return render(request, 'games/index.html', context)
 
 def game_detail(request, game_id):
-    # TODO(ssheldon): Implement a game detail view
-    pass
+    context = {'detail': Game.game_detail(game_id)}
+    print context
+    return render(request, 'games/game_detail.html', context)
 
 def game_add(request):
     if request.method == 'POST':

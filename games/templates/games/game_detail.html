@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for game in detail %}
+{% if forloop.first %}
+<p>Title: {{ game.title }}</p>
+<p>Genre: {{ game.genre_name }}</p>
+
+<table style="border-collapse:collapse" border="1">
+  <tr>
+    <th>Platform</th>
+    <th>Release</th>
+  </tr>
+{% endif %}
+  <tr>
+    <td>
+      {{game.platform_name}}
+    </td>
+    <td>
+      {{game.release_date}}
+    </td>
+  </tr>
+{% if forloop.last %}
+</table>
+{% endif %}
+{% endfor%}
+{% endblock %}
