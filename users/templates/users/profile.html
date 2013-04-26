@@ -1,42 +1,37 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% include "friends_list.html" %}
-
-{% include "lists/games.html" %}
-
 {% if user.is_authenticated and user.id != profile.id %}
-      <form action="{% url 'accounts:request_friend' %}" method="post"
-            style="display:inline">
-        {% csrf_token %}
-        <input type="hidden" name="friend_id" value="{{ profile.id }}" />
-        <input type="submit" value="Send Friend Request" />
-      </form>
-    {% endif %}
-<br />
-<br />
-{% if user.is_authenticated and user.id == profile.id %}
-<form action="{% url 'accounts:game_search' %}" method="get" style="display:inline">
-    <input type="text" name="search", value="Games your friends play" />
-    <input type="submit" value="Search"/>
-</form>
-<br />
-<a href="">Import Library From Steam</a>
-<br />
-<form action="{% url 'accounts:import_steam_games' %}" method="post"
-            style="display:inline">
-        {% csrf_token %}
-        <input type="text" name="gamer_id" value="" />
-        <input type="submit" value="Import from Steam"/>
-</form>
-<br />
-<a href="">Import Library From Xbox</a>
-<br />
-<form action="{% url 'accounts:import_xbox_games' %}" method="post"
-            style="display:inline">
-        {% csrf_token %}
-        <input type="text" name="gamer_id" value="" />
-        <input type="submit" value="Import from Xbox"/>
+<form action="{% url 'accounts:request_friend' %}" method="post"
+      style="display:inline">
+  {% csrf_token %}
+  <input type="hidden" name="friend_id" value="{{ profile.id }}" />
+  <input type="submit" value="Send Friend Request" />
 </form>
 {% endif %}
+
+{% if user.is_authenticated and user.id == profile.id %}
+<form action="{% url 'accounts:game_search' %}" method="get">
+  <input type="text" name="search" placeholder="Game title" />
+  <input type="submit" value="Search friends' games"/>
+</form>
+
+<form action="{% url 'accounts:import_steam_games' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="gamer_id" placeholder="SteamID" />
+  <input type="submit" value="Import from Steam"/>
+</form>
+
+<form action="{% url 'accounts:import_xbox_games' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="gamer_id" placeholder="Gamertag" />
+  <input type="submit" value="Import from Xbox"/>
+</form>
+{% endif %}
+
+<h2>Friends</h2>
+{% include "friends_list.html" %}
+
+<h2>Games</h2>
+{% include "lists/games.html" %}
 {% endblock %}
