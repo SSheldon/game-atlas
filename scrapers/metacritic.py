@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-import urllib
+import urllib2
 import re
 
 def get_score(soup):
@@ -47,7 +47,10 @@ def get_other_platforms(soup):
 	    if span.string == 'Also On:':
 		    span_next = span.findNext('span')
 		    for a in span_next.findAll('a'):
-			    platforms.append(a.string.strip())
+			    platform = a.string.strip()
+			    if "iPhone" in platform or "iPad" in platform:
+		                platform = "ios"
+			    platforms.append(platform)
     return platforms
 
 def fix_string(s):
@@ -61,13 +64,21 @@ def get_info(game, platform):
     game = fix_string(game)
     platform = fix_string(platform)
     
-    url = urllib.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
+    try:
+    	print "test"
+        url = urllib2.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
+    except:
+        print "blah"
+        return []
     soups = [BeautifulSoup(url)]
 
     platforms = get_other_platforms(soups[0])
     for platform in platforms:
-	url = urllib.urlopen("http://www.metacritic.com/game/" + fix_string(platform) + "/" + game)
-	soups.append(BeautifulSoup(url))
+        try:
+            url = urllib2.urlopen("http://www.metacritic.com/game/" + fix_string(platform) + "/" + game)
+	except:
+	    continue
+        soups.append(BeautifulSoup(url))
 
     info_list = []
     for soup in soups:
@@ -81,6 +92,6 @@ def get_info(game, platform):
         info_dict['publisher'] = get_publisher(soup)
         info_dict['release'] =  get_release(soup)
         if (info_dict['release'] != 'TBA'):
-            info_list.append(info_dict)
-
+           info_list.append(info_dict)
+	
     return info_list
