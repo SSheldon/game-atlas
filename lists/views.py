@@ -16,6 +16,12 @@ def add_game(request, next_page='accounts:games'):
     UserGame.add_game(request.user.id, request.POST['game_id'])
     return redirect(next_page)
 
+@require_POST
+@login_required
+def remove_game(request, next_page='accounts:games'):
+    UserGame.remove_game(request.user.id, request.POST['game_id'])
+    return redirect(next_page)
+
 @login_required
 def recommended_games(request):
     lists, games = UserGame.get_all_lists()
