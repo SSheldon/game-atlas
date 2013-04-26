@@ -44,15 +44,16 @@ def game_delete(request):
     return redirect('games:index')
 
 def game_search(request):
-    if request.method == 'GET':
-        context = {'games': Game.find(request.GET['title'])}
-        return render(request, 'games/search.html', context)
+    context = {}
+    if 'title' in request.GET:
+        context['games'] = Game.find(request.GET['title'])
+    return render(request, 'games/search.html', context)
 
 def game_add2(request):
     if request.method == 'POST':
         info_dict = get_info(request.POST['title'], request.POST['platform'])
         if info_dict is None:
             return redirect('games:index')
-        Release.game_info(info_dict, request.POST['title'], request.POST['platform'])
+        Release.game_info(info_dict)
 
     return redirect('games:index')
