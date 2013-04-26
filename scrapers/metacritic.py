@@ -53,6 +53,12 @@ def get_other_platforms(soup):
 			    platforms.append(platform)
     return platforms
 
+def is404(soup):
+    for span in soup.findAll('span', {'class': 'error_code'}):
+	    if span.string == '404':
+		    return True
+    return False
+
 def fix_string(s):
     s = s.lower()
     s = re.sub('[.!,;:]', '', s)
@@ -64,24 +70,20 @@ def get_info(game, platform):
     game = fix_string(game)
     platform = fix_string(platform)
     
-    try:
-    	print "test"
-        url = urllib2.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
-    except:
-        print "blah"
-        return []
+    url = urllib2.urlopen("http://www.metacritic.com/game/" + platform +"/" + game)
     soups = [BeautifulSoup(url)]
+    if is404(soups[0]):
+        return []
 
     platforms = get_other_platforms(soups[0])
     for platform in platforms:
-        try:
-            url = urllib2.urlopen("http://www.metacritic.com/game/" + fix_string(platform) + "/" + game)
-	except:
-	    continue
-        soups.append(BeautifulSoup(url))
+        url = urllib2.urlopen("http://www.metacritic.com/game/" + fix_string(platform) + "/" + game)
+	soups.append(BeautifulSoup(url))
 
     info_list = []
     for soup in soups:
+	if is404(soup):
+	    continue
         info_dict = {}
         info_dict['title'] = get_name(soup)
         info_dict['platform'] = get_platform(soup)
