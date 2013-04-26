@@ -13,8 +13,10 @@ def index(request):
     return render(request, 'games/index.html', context)
 
 def game_detail(request, game_id):
-    context = {'detail': Game.game_detail(game_id)}
-    print context
+    context = {
+        'game_id': game_id,
+        'releases': Game.game_detail(game_id),
+    }
     return render(request, 'games/game_detail.html', context)
 
 def game_add(request):

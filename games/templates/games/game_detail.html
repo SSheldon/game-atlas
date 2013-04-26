@@ -2,27 +2,30 @@
 
 {% block content %}
 
-{% for game in detail %}
-{% if forloop.first %}
-<p>Title: {{ game.title }}</p>
-<p>Genre: {{ game.genre_name }}</p>
+{% if releases %}
+<p>Title: {{ releases.0.title }}</p>
+<p>Genre: {{ releases.0.genre_name }}</p>
 
 <table style="border-collapse:collapse" border="1">
   <tr>
     <th>Platform</th>
     <th>Release</th>
   </tr>
-{% endif %}
+{% for release in releases %}
   <tr>
-    <td>
-      {{game.platform_name}}
-    </td>
-    <td>
-      {{game.release_date}}
-    </td>
+    <td>{{ release.platform_name }}</td>
+    <td>{{ release.release_date }}</td>
   </tr>
-{% if forloop.last %}
+{% endfor%}
 </table>
 {% endif %}
-{% endfor%}
+
+<p><a href="{% url 'games:game_edit' game_id %}">Edit this game</a></p>
+
+<form action="{% url 'games:game_delete' %}" method="post"
+      style="display:inline">
+  {% csrf_token %}
+  <input type="hidden" name="game_id" value="{{ game_id }}" />
+  <input type="submit" value="Delete" />
+</form>
 {% endblock %}

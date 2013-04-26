@@ -10,17 +10,9 @@
   {% for game in games_list %}
   <tr>
     <td>
-      <a href="{% url 'games:game_edit' game.id %}">{{ game.title }}</a>
+      <a href="{% url 'games:game_detail' game.id %}">{{ game.title }}</a>
     </td>
     <td>{{ game.genre_name }}</td>
-    <td>
-      <form action="{% url 'games:game_delete' %}" method="post"
-            style="display:inline">
-        {% csrf_token %}
-        <input type="hidden" name="game_id" value="{{ game.id }}" />
-        <input type="submit" value="Delete" />
-      </form>
-    </td>
     {% if user.is_authenticated %}
     <td>
       <form action="{% url 'accounts:add_game' %}" method="post"
