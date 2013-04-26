@@ -40,7 +40,7 @@ def recommend(currentUser, UserGames):
 	for ranking in rankings:
 		otherUser = UserGames[ranking[0]]
 		for i in range(0, len(otherUser)):
-			if (otherUser[i] and not currentUser[i] and i not in recommendations):
+			if (otherUser[i] and not currentUser[i] and i not in recommendations and len(recommendations) < 20):
 				recommendations.append(i)
 	return recommendations
 
