@@ -24,11 +24,4 @@
   <br />
   <input type="submit" value="Save" />
 </form>
-<br />
-<form action="{% url 'games:game_add2' %}" method="post">
-  {% csrf_token %}
-  Title: <input type="text" name="title">
-  Platform <input type="text" name="platform">
-  <input type="submit" value="Add game">
-</form>
 {% endblock %}

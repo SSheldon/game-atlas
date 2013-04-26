@@ -52,11 +52,12 @@ def game_search(request):
         context['games'] = Game.find(request.GET['title'])
     return render(request, 'games/search.html', context)
 
-def game_add2(request):
+def game_import(request):
     if request.method == 'POST':
         for info_dict in get_info(request.POST['title'], request.POST['platform']):
             if info_dict is None:
-               return redirect('games:index')
+               break
             Release.game_info(info_dict)
-
-    return redirect('games:index')
+        return redirect('games:index')
+    else:
+        return render(request, 'games/import.html')

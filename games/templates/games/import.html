@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form action="{% url 'games:game_import' %}" method="post">
+  {% csrf_token %}
+  <input type="text" name="title" placeholder="Title" /><br />
+  <input type="text" name="platform" placeholder="Platform" /><br />
+  <input type="submit" value="Import" /><br />
+</form>
+{% endblock %}
