@@ -30,9 +30,11 @@ def recommended_games(request):
     context = {'games_list': Game.select_many(recommended_ids)}
     return render(request, 'games/index.html', context)
 
+@require_POST
 @login_required
 def import_xbox_games(request):
-    if request.method == 'POST':
-        titles = get_games(request.POST['gamertag'])
-        games = Games.select_many_by_title(titles)
-    return None
+    titles = get_games(request.POST['gamer_id'])
+    games = Game.select_many_by_title(titles)
+    game_ids = [game['id'] for game in games]
+    UserGame.add_games(request.user.id, game_ids)
+    return redirect('accounts:games')

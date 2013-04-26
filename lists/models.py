@@ -43,6 +43,20 @@ class UserGame(Model):
         transaction.commit_unless_managed()
 
     @staticmethod
+    def add_games(user_id, game_ids):
+        cursor = connection.cursor()
+
+        query = 'INSERT INTO user_game (user_id, game_id) VALUES ' + \
+            ', '.join(['(%s, %s)'] * len(game_ids))
+        args = []
+        for game_id in game_ids:
+            args.append(user_id)
+            args.append(game_id)
+
+        cursor.execute(query, args)
+        transaction.commit_unless_managed()
+
+    @staticmethod
     def get_all_lists():
         user_games = defaultdict(list)
         games = set()

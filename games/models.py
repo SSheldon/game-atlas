@@ -93,10 +93,10 @@ class Game(models.Model):
         cursor = connection.cursor()
 
         query = """
-            SELECT id, title, FROM game
+            SELECT id, title FROM game
             WHERE title = ANY(%s)
         """
-        cursor.execute(query, (game_ids,))
+        cursor.execute(query, (titles,))
 
         return dict_fetch_all(cursor)
 
