@@ -51,3 +51,30 @@ def get_game_name(username, appid):
         return None
     
     
+def get_all_game_names(username):
+    game_names = []
+    appids = []
+    api_key = '8FFA57C3004635970E3366E04EE2F8A0'
+    steamid = get_steamid(username)
+    if steamid == None:
+        return game_names
+    owned_games_url = 'http://api.steampowered.com/IPlayerService/GetOwnedGames/v0001/?key=' + api_key + '&steamid=' + steamid + '&format=json'
+    owned_games = urllib2.urlopen(owned_games_url)
+    games = json.load(owned_games)
+    for game in games['response']['games']:
+        appids.append(str(game['appid']))
+    for appid in appids:
+        game_stats_url = 'http://api.steampowered.com/ISteamUserStats/GetPlayerAchievements/v0001/?appid=' + appid + '&key=' + api_key + '&steamid=' + steamid
+        try:
+            game_stats = urllib2.urlopen(game_stats_url)
+            stats = json.load(game_stats)
+            name = stats['playerstats']['gameName']
+            if name != '' and not 'ValveTestApp' in name:
+                game_names.append(name)
+            else:
+                continue
+        except ValueError, ex:
+            continue
+        except urllib2.URLError, ex:
+            continue
+    return game_names
