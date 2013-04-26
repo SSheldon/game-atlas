@@ -2,8 +2,6 @@ from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 from django.shortcuts import render
 
-import friends.views as friends_views
-
 from friends.models import Friend
 from lists.models import UserGame
 
@@ -17,7 +15,12 @@ def games(request, username):
 
 def friends(request, username):
     user = get_object_or_404(User, username=username)
-    return friends_views.show_friends(request, user.id)
+    context = {
+        'friends': Friend.get_friends(user.id),
+        'pending_friends': Friend.get_pending_friends(user.id),
+        'profile': user,
+    }
+    return render(request, 'users/friends.html', context)
 
 def profile(request, username):
     user = get_object_or_404(User, username=username)
