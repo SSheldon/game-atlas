@@ -6,6 +6,7 @@ from games.models import Game
 from lists.models import UserGame
 from recommendations.collab_filter import recommend_games
 from scrapers.xbox import get_games
+from scrapers.steam import get_all_game_names
 
 @require_POST
 @login_required
@@ -34,6 +35,15 @@ def recommended_games(request):
 @login_required
 def import_xbox_games(request):
     titles = get_games(request.POST['gamer_id'])
+    games = Game.select_many_by_title(titles)
+    game_ids = [game['id'] for game in games]
+    UserGame.add_games(request.user.id, game_ids)
+    return redirect('accounts:games')
+
+@require_POST
+@login_required
+def import_steam_games(request):
+    titles = get_all_game_names(request.POST['gamer_id'])
     games = Game.select_many_by_title(titles)
     game_ids = [game['id'] for game in games]
     UserGame.add_games(request.user.id, game_ids)

@@ -21,6 +21,15 @@
     <input type="submit" value="Search"/>
 </form>
 <br />
+<a href="">Import Library From Steam</a>
+<br />
+<form action="{% url 'accounts:import_steam_games' %}" method="post"
+            style="display:inline">
+        {% csrf_token %}
+        <input type="text" name="gamer_id" value="" />
+        <input type="submit" value="Import from Steam"/>
+</form>
+<br />
 <a href="">Import Library From Xbox</a>
 <br />
 <form action="{% url 'accounts:import_xbox_games' %}" method="post"
