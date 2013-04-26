@@ -15,7 +15,13 @@ def norm(Vector, power):
 
 # Gets the ranking of two users using vector space model search
 def getRanking(UserA, UserB):
-	return dot(UserA, UserB)/(norm(UserA, 2)*norm(UserB, 2))
+	AdotB = dot(UserA, UserB)
+	normA = norm(UserA, 2)
+	normB = norm(UserB, 2)
+	if (normA == 0 or normB == 0):
+		return 0;
+	else:
+		return AdotB/(normA*normB)
 
 def user_game_vector(user_games, game_indices):
     game_vector = [0] * len(game_indices)
